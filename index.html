@@ -75,6 +75,16 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;
   font-family:var(--micro);font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.4)}
 
+/* LANG SWITCHER */
+.lang-switcher{display:inline-flex;gap:2px;background:rgba(255,255,255,.05);
+  border:1px solid var(--line);border-radius:999px;padding:3px;align-items:center}
+.lang-btn{padding:6px 10px;border-radius:999px;
+  font-family:var(--micro);font-size:9px;letter-spacing:.08em;
+  color:var(--muted);transition:all .2s;text-transform:uppercase;line-height:1}
+.lang-btn:hover{color:#fff}
+.lang-btn.is-active{background:var(--lime);color:#0a0a0a;font-weight:700}
+.lang-switcher.compact .lang-btn{padding:5px 8px;font-size:8px}
+
 /* NAV */
 .section-nav{position:sticky;top:0;z-index:60;background:rgba(10,10,10,.85);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
@@ -87,6 +97,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .nav-links a:hover{color:#fff}
 .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-6px;height:1px;background:var(--lime);transition:right .28s ease}
 .nav-links a:hover::after{right:0}
+.nav-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
 .nav-icon{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);
   display:grid;place-items:center;transition:border-color .2s,background .2s;flex-shrink:0}
 .nav-icon:hover{border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.06)}
@@ -185,6 +196,26 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   animation:spin .8s linear infinite;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* Map disabled on mobile */
+.map-disabled-msg{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;padding:40px 24px;text-align:center;
+  background:radial-gradient(circle at 50% 40%, rgba(215,243,106,.06), transparent 70%);
+}
+.map-disabled-msg .mdm-icon{
+  width:54px;height:54px;border-radius:50%;
+  border:1px solid rgba(215,243,106,.35);background:rgba(215,243,106,.08);
+  display:grid;place-items:center;color:var(--lime);
+}
+.map-disabled-msg .mdm-title{
+  font-family:var(--px);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:#fff;line-height:1.6;
+}
+.map-disabled-msg .mdm-desc{
+  font-family:var(--micro);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);line-height:1.8;max-width:340px;
+}
 
 /* SECTION HEAD */
 .sec-head{text-align:center;margin-bottom:64px}
@@ -458,6 +489,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .access-cell{background:var(--bg);padding:26px 20px}
 .access-cell .micro{color:rgba(255,255,255,.4);display:block;margin-bottom:12px}
 .access-cell strong{font-size:14px;font-weight:500;color:#fff;word-break:break-word;line-height:1.5}
+.access-cell .locked-field{justify-content:center}
 .access-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;margin-top:40px}
 
 /* FOOTER */
@@ -515,6 +547,8 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   .map-tab.is-active{border-bottom-color:var(--line);border-left-color:var(--lime)}
   .passcode-box{padding:28px 22px}
   .passcode-input{font-size:16px;letter-spacing:.5em}
+  .topbar{padding:14px 16px}
+  .lang-switcher .lang-btn{padding:5px 7px;font-size:8px}
 }
 
 /* MARKER & TOOLTIP MAP */
@@ -746,26 +780,32 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
       <span class="brand-name">AMR</span>
     </div>
     <div class="topbar-right">
-      <span class="product-title">Asisten Dosen &amp; Peneliti</span>
+      <span class="product-title" data-i18n="topbar.role">Asisten Dosen &amp; Peneliti</span>
       <span class="badge">S.Mat. · M.Si.</span>
+      <div class="lang-switcher" role="group" aria-label="Language">
+        <button class="lang-btn is-active" data-lang="id" type="button">ID</button>
+        <button class="lang-btn" data-lang="en" type="button">EN</button>
+        <button class="lang-btn" data-lang="ja" type="button">日本語</button>
+        <button class="lang-btn" data-lang="zh" type="button">中文</button>
+      </div>
     </div>
   </div>
 
   <div class="hero-content">
     <h1 class="hero-wordmark">Ridho</h1>
-    <p class="hero-tagline">
+    <p class="hero-tagline" data-i18n="hero.tagline">
       Pemodelan matematika, simulasi numerik, dan analisis data untuk masalah sosial,
       kesehatan, dan lingkungan — dari krisis moral Gen Z hingga konservasi mangrove di Sulawesi.
     </p>
     <div class="hero-meta">
-      <span class="badge badge-lime">17 Riset Kemendiktisaintek</span>
-      <span class="badge">47+ Artikel Ilmiah</span>
-      <span class="badge">6 HKI Software</span>
+      <span class="badge badge-lime" data-i18n="hero.badge1">17 Riset Kemendiktisaintek</span>
+      <span class="badge" data-i18n="hero.badge2">47+ Artikel Ilmiah</span>
+      <span class="badge" data-i18n="hero.badge3">6 HKI Software</span>
     </div>
-    <a href="#profil" class="btn btn-primary">Lihat Riwayat Hidup</a>
+    <a href="#profil" class="btn btn-primary" data-i18n="hero.cta">Lihat Riwayat Hidup</a>
   </div>
 
-  <div class="scroll-hint">Scroll</div>
+  <div class="scroll-hint" data-i18n="hero.scroll">Scroll</div>
 </header>
 
 <!-- 2. STICKY NAV -->
@@ -773,26 +813,34 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   <div class="inner">
     <span class="nav-mark">AMR</span>
     <div class="nav-links">
-      <a href="#profil">Profil</a>
-      <a href="#pendidikan">Pendidikan</a>
-      <a href="#riset">Riset</a>
-      <a href="#publikasi">Publikasi</a>
-      <a href="#pengabdian">Pengabdian</a>
-      <a href="#pengajaran">Pengajaran</a>
-      <a href="#penghargaan">Penghargaan</a>
-      <a href="#kontak">Kontak</a>
+      <a href="#profil" data-i18n="nav.profil">Profil</a>
+      <a href="#pendidikan" data-i18n="nav.pendidikan">Pendidikan</a>
+      <a href="#riset" data-i18n="nav.riset">Riset</a>
+      <a href="#publikasi" data-i18n="nav.publikasi">Publikasi</a>
+      <a href="#pengabdian" data-i18n="nav.pengabdian">Pengabdian</a>
+      <a href="#pengajaran" data-i18n="nav.pengajaran">Pengajaran</a>
+      <a href="#penghargaan" data-i18n="nav.penghargaan">Penghargaan</a>
+      <a href="#kontak" data-i18n="nav.kontak">Kontak</a>
     </div>
-    <a href="#kontak" class="nav-icon" aria-label="Kontak">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-           stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M4 7l8 6 8-6"/></svg>
-    </a>
+    <div class="nav-right">
+      <div class="lang-switcher compact" role="group" aria-label="Language">
+        <button class="lang-btn is-active" data-lang="id" type="button">ID</button>
+        <button class="lang-btn" data-lang="en" type="button">EN</button>
+        <button class="lang-btn" data-lang="ja" type="button">日</button>
+        <button class="lang-btn" data-lang="zh" type="button">中</button>
+      </div>
+      <a href="#kontak" class="nav-icon" aria-label="Kontak">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+             stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="M4 7l8 6 8-6"/></svg>
+      </a>
+    </div>
   </div>
 </nav>
 
 <!-- 3. MANIFESTO -->
 <section class="manifesto scan center" id="profil">
-  <h2>Matematika bukan sekadar angka —<br>ia cara membaca persoalan sosial</h2>
-  <p>
+  <h2 data-i18n-html="manifesto.title">Matematika bukan sekadar angka —<br>ia cara membaca persoalan sosial</h2>
+  <p data-i18n="manifesto.text">
     Lulusan S1 dan S2 Matematika Universitas Negeri Makassar dengan fokus pemodelan matematika
     dan simulasi numerik. Selama lima tahun terakhir terlibat dalam 17 penelitian yang didanai
     Kemendiktisaintek, menulis 47+ artikel ilmiah di jurnal nasional dan internasional,
@@ -802,7 +850,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 </section>
 
 <!-- 4. MEDIA FRAME (PETA INTERAKTIF DENGAN 4 TAB) -->
-<section class="media-section">
+<section class="media-section" id="map-section">
   <div class="media-frame">
     <div class="map-tabs" role="tablist">
       <button class="map-tab is-active" data-map-tab="aqi" role="tab">
@@ -810,7 +858,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
              stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 12h4l2-6 4 12 2-6h6"/>
         </svg>
-        Polusi Udara
+        <span data-i18n="map.tab.air">Polusi Udara</span>
       </button>
       <button class="map-tab" data-map-tab="cuaca" role="tab">
         <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -818,7 +866,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
           <path d="M17.5 19a4.5 4.5 0 1 0 0-9 6 6 0 0 0-11.6 1.5A3.5 3.5 0 0 0 6.5 19z"/>
           <path d="M12 14v4"/><path d="M10 16l2 2 2-2"/>
         </svg>
-        Cuaca &amp; Hujan
+        <span data-i18n="map.tab.weather">Cuaca &amp; Hujan</span>
       </button>
       <button class="map-tab" data-map-tab="gempa" role="tab">
         <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -827,7 +875,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
           <path d="M14.83 14.83l4.24 4.24"/><path d="M2 12h6"/><path d="M16 12h6"/>
           <path d="M4.93 19.07l4.24-4.24"/><path d="M14.83 9.17l4.24-4.24"/>
         </svg>
-        Gempa Bumi
+        <span data-i18n="map.tab.quake">Gempa Bumi</span>
       </button>
       <button class="map-tab" data-map-tab="kebakaran" role="tab">
         <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -835,7 +883,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
           <path d="M12 22c4-2 6-6 6-10 0-3-2-6-6-10-4 4-6 7-6 10 0 4 2 8 6 10z"/>
           <path d="M12 18c2-1 3-3 3-5 0-1.5-1-3-3-5-2 2-3 3.5-3 5 0 2 1 4 3 5z"/>
         </svg>
-        Kebakaran Hutan
+        <span data-i18n="map.tab.fire">Kebakaran Hutan</span>
       </button>
     </div>
 
@@ -859,35 +907,36 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
       <div class="map-loading" id="map-loading">
         <div class="spinner"></div>
-        <span>Memuat data…</span>
+        <span data-i18n="map.loading">Memuat data…</span>
       </div>
     </div>
   </div>
-  <p class="media-caption">Peta interaktif per Kota/Kabupaten · Polusi Udara &amp; Cuaca/Hujan (Open-Meteo) · Gempa (BMKG) · Kebakaran (NASA FIRMS) · Koordinat: BIG Gazeter · Basemap: Esri Dark Gray Canvas</p>
+  <p class="media-caption" data-i18n="map.caption">Peta interaktif per Kota/Kabupaten · Polusi Udara &amp; Cuaca/Hujan (Open-Meteo) · Gempa (BMKG) · Kebakaran (NASA FIRMS) · Koordinat: BIG Gazeter · Basemap: Esri Dark Gray Canvas</p>
 </section>
 
 <!-- 5. IDENTITAS -->
 <section class="identity">
   <div class="sec-head">
-    <span class="badge pill">A · Identitas Diri</span>
-    <h2>Profil Singkat</h2>
-    <p>Data pribadi dan domisili sesuai dokumen resmi.<br>
-       <span style="color:var(--lime);font-family:var(--micro);font-size:9px;letter-spacing:.18em;text-transform:uppercase;">
-         🔒 Data sensitif terkunci — klik untuk membuka
-       </span>
+    <span class="badge pill" data-i18n="id.pill">A · Identitas Diri</span>
+    <h2 data-i18n="id.title">Profil Singkat</h2>
+    <p>
+      <span data-i18n="id.desc">Data pribadi dan domisili sesuai dokumen resmi.</span><br>
+      <span style="color:var(--lime);font-family:var(--micro);font-size:9px;letter-spacing:.18em;text-transform:uppercase;" data-i18n="id.lockHint">
+        🔒 Data sensitif terkunci — klik untuk membuka
+      </span>
     </p>
   </div>
   <div class="id-grid">
     <div class="id-cell wide">
-      <span class="micro">Nama Lengkap</span>
+      <span class="micro" data-i18n="id.name">Nama Lengkap</span>
       <strong>Andi Muhammad Ridho Yusuf Sainon Andi Pandjajangi, S.Mat., M.Si.</strong>
     </div>
     <div class="id-cell">
-      <span class="micro">Pekerjaan</span>
-      <strong>Asisten Dosen / Asisten Riset</strong>
+      <span class="micro" data-i18n="id.job">Pekerjaan</span>
+      <strong data-i18n="id.jobValue">Asisten Dosen / Asisten Riset</strong>
     </div>
     <div class="id-cell">
-      <span class="micro">NIK 🔒</span>
+      <span class="micro" data-i18n="id.nik">NIK 🔒</span>
       <div class="locked-field" data-field="nik">
         <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
@@ -898,11 +947,11 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
       </div>
     </div>
     <div class="id-cell">
-      <span class="micro">Tempat &amp; Tanggal Lahir</span>
+      <span class="micro" data-i18n="id.birth">Tempat &amp; Tanggal Lahir</span>
       <strong>Siwa, 30 Januari 1996</strong>
     </div>
     <div class="id-cell">
-      <span class="micro">Nomor Telepon 🔒</span>
+      <span class="micro" data-i18n="id.phone">Nomor Telepon 🔒</span>
       <div class="locked-field" data-field="phone">
         <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
@@ -913,12 +962,12 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
       </div>
     </div>
     <div class="id-cell wide">
-      <span class="micro">Alamat Rumah</span>
-      <strong>Kec. Mamuju, Kabupaten Mamuju, Sulawesi Barat</strong>
+      <span class="micro" data-i18n="id.address">Alamat Rumah</span>
+      <strong data-i18n="id.addressValue">Kec. Mamuju, Kabupaten Mamuju, Sulawesi Barat</strong>
     </div>
     <div class="id-cell wide">
-      <span class="micro">Alamat E-Mail</span>
-      <strong>ridhographicdesigner@gmail.com</strong>
+      <span class="micro" data-i18n="id.email">Alamat E-Mail</span>
+      <strong>ridhographicdesigner@gmail.com<br>andimuhammadridhoyusufsainonan@gmail.com</strong>
     </div>
   </div>
 </section>
@@ -926,22 +975,21 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 <!-- 6. PENDIDIKAN -->
 <section class="identity" id="pendidikan">
   <div class="sec-head">
-    <span class="badge pill">B · Riwayat Pendidikan</span>
-    <h2>Pendidikan Formal</h2>
-    <p>Dua jenjang pendidikan tinggi di bidang Matematika di Universitas Negeri Makassar.</p>
+    <span class="badge pill" data-i18n="edu.pill">B · Riwayat Pendidikan</span>
+    <h2 data-i18n="edu.title">Pendidikan Formal</h2>
+    <p data-i18n="edu.desc">Dua jenjang pendidikan tinggi di bidang Matematika di Universitas Negeri Makassar.</p>
   </div>
   <div class="edu-grid">
     <div class="edu-card">
       <span class="micro">S-1 · 2016 – 2021</span>
       <h3>Universitas Negeri Makassar</h3>
-      <p class="edu-meta">Bidang Ilmu: <b>Matematika</b><br>Program: Sarjana (S1)</p>
+      <p class="edu-meta"><span data-i18n="edu.field">Bidang Ilmu</span>: <b data-i18n="edu.math">Matematika</b><br><span data-i18n="edu.program">Program</span>: <span data-i18n="edu.bachelor">Sarjana (S1)</span></p>
       <p class="edu-thesis">
-        <b>Judul Skripsi</b>
-        Solusi Permasalahan Kasus Sosial Kemiskinan Akibat Covid-19 Menggunakan
-        Permodelan Matematika Pada Wilayah Kota Makassar
+        <b data-i18n="edu.thesis">Judul Skripsi</b>
+        <span data-i18n="edu.thesis1">Solusi Permasalahan Kasus Sosial Kemiskinan Akibat Covid-19 Menggunakan Permodelan Matematika Pada Wilayah Kota Makassar</span>
       </p>
       <p class="edu-thesis" style="border-top:none;padding-top:14px">
-        <b>Pembimbing</b>
+        <b data-i18n="edu.advisor">Pembimbing</b>
         Prof. Syafruddin Side, S.Si., M.Si., Ph.D.<br>
         Sukarna, S.Si., M.Si.
       </p>
@@ -949,14 +997,13 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
     <div class="edu-card">
       <span class="micro">S-2 · 2022 – 2023</span>
       <h3>Universitas Negeri Makassar</h3>
-      <p class="edu-meta">Bidang Ilmu: <b>Matematika</b><br>Program: Magister (S2)</p>
+      <p class="edu-meta"><span data-i18n="edu.field">Bidang Ilmu</span>: <b data-i18n="edu.math">Matematika</b><br><span data-i18n="edu.program">Program</span>: <span data-i18n="edu.master">Magister (S2)</span></p>
       <p class="edu-thesis">
-        <b>Judul Tesis</b>
-        Analisis Dan Simulasi Model Matematika SE2CFS Pada Kasus Krisis Moral
-        Generasi Z Di Wilayah Kota Makassar
+        <b data-i18n="edu.thesisM">Judul Tesis</b>
+        <span data-i18n="edu.thesis2">Analisis Dan Simulasi Model Matematika SE2CFS Pada Kasus Krisis Moral Generasi Z Di Wilayah Kota Makassar</span>
       </p>
       <p class="edu-thesis" style="border-top:none;padding-top:14px">
-        <b>Pembimbing</b>
+        <b data-i18n="edu.advisor">Pembimbing</b>
         Prof. Syafruddin Side, S.Si., M.Si., Ph.D.<br>
         Prof. Wahidah Sanusi, S.Si., M.Si., Ph.D.
       </p>
@@ -967,61 +1014,61 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 <!-- 7. CAPABILITY TABS -->
 <section class="capabilities" id="riset">
   <div class="sec-head">
-    <span class="badge pill">C · Pengalaman</span>
-    <h2>Tiga Bidang Kontribusi</h2>
-    <p>Riset, pengabdian masyarakat, dan pengajaran — tiga pilar kegiatan akademik.</p>
+    <span class="badge pill" data-i18n="cap.pill">C · Pengalaman</span>
+    <h2 data-i18n="cap.title">Tiga Bidang Kontribusi</h2>
+    <p data-i18n="cap.desc">Riset, pengabdian masyarakat, dan pengajaran — tiga pilar kegiatan akademik.</p>
   </div>
 
   <div class="cap-tabs" role="tablist">
-    <button class="cap-tab is-active" data-target="cap-riset" role="tab">Riset</button>
-    <button class="cap-tab" data-target="cap-pengabdian" role="tab">Pengabdian</button>
-    <button class="cap-tab" data-target="cap-pengajaran" role="tab">Pengajaran</button>
+    <button class="cap-tab is-active" data-target="cap-riset" role="tab" data-i18n="cap.tab.research">Riset</button>
+    <button class="cap-tab" data-target="cap-pengabdian" role="tab" data-i18n="cap.tab.service">Pengabdian</button>
+    <button class="cap-tab" data-target="cap-pengajaran" role="tab" data-i18n="cap.tab.teaching">Pengajaran</button>
   </div>
 
   <div class="cap-body">
     <div class="cap-panel is-active" id="cap-riset" role="tabpanel">
       <div class="cap-stats">
-        <div class="cap-stat"><span class="num">17</span><span class="lbl">Penelitian</span></div>
-        <div class="cap-stat"><span class="num">5</span><span class="lbl">Tahun Terakhir</span></div>
+        <div class="cap-stat"><span class="num">17</span><span class="lbl" data-i18n="cap.stat.research">Penelitian</span></div>
+        <div class="cap-stat"><span class="num">5</span><span class="lbl" data-i18n="cap.stat.years">Tahun Terakhir</span></div>
         <div class="cap-stat"><span class="num">100%</span><span class="lbl">Kemendiktisaintek</span></div>
       </div>
-      <p>
+      <p data-i18n="cap.research.text">
         Sebanyak 17 penelitian dalam lima tahun terakhir, seluruhnya didanai Kemendiktisaintek.
         Topiknya beragam: mitigasi degradasi mangrove dan konservasi kepiting, over-eksploitasi
         perikanan laut, pencegahan stunting berbasis kearifan lokal, rekonsiliasi sosial polarisasi
         politik Gen-Z, eco-anxiety remaja pesisir, kecanduan game online, hingga penyebaran DBD
         lewat vektor Wolbachia akibat perubahan iklim.
       </p>
-      <a href="#publikasi" class="btn btn-ghost">Lihat daftar penelitian ↓</a>
+      <a href="#publikasi" class="btn btn-ghost" data-i18n="cap.research.cta">Lihat daftar penelitian ↓</a>
     </div>
     <div class="cap-panel" id="cap-pengabdian" role="tabpanel">
       <div class="cap-stats">
-        <div class="cap-stat"><span class="num">5</span><span class="lbl">Program PKM</span></div>
-        <div class="cap-stat"><span class="num">2</span><span class="lbl">Provinsi</span></div>
-        <div class="cap-stat"><span class="num">2</span><span class="lbl">Tahun</span></div>
+        <div class="cap-stat"><span class="num">5</span><span class="lbl" data-i18n="cap.stat.pkm">Program PKM</span></div>
+        <div class="cap-stat"><span class="num">2</span><span class="lbl" data-i18n="cap.stat.prov">Provinsi</span></div>
+        <div class="cap-stat"><span class="num">2</span><span class="lbl" data-i18n="cap.stat.years2">Tahun</span></div>
       </div>
-      <p>
+      <p data-i18n="cap.service.text">
         Lima program pengabdian masyarakat di Sulawesi Barat dan Sulawesi Selatan — mulai dari
         optimalisasi pekarangan rumah untuk penguatan ekonomi keluarga di Desa Ralleanak Utara,
         Mamasa; pelatihan penulisan proposal usaha untuk Koperasi Merah Putih di Desa Lumika,
         Mamuju; hingga pendampingan kewirausahaan dan pemasaran digital bagi kelompok tani
         Matongeng-Tongeng di Kabupaten Pinrang.
       </p>
-      <a href="#pengabdian" class="btn btn-ghost">Lihat program pengabdian ↓</a>
+      <a href="#pengabdian" class="btn btn-ghost" data-i18n="cap.service.cta">Lihat program pengabdian ↓</a>
     </div>
     <div class="cap-panel" id="cap-pengajaran" role="tabpanel">
       <div class="cap-stats">
-        <div class="cap-stat"><span class="num">18</span><span class="lbl">Mata Kuliah</span></div>
-        <div class="cap-stat"><span class="num">6</span><span class="lbl">Program Studi</span></div>
-        <div class="cap-stat"><span class="num">3</span><span class="lbl">Tahun Terakhir</span></div>
+        <div class="cap-stat"><span class="num">18</span><span class="lbl" data-i18n="cap.stat.courses">Mata Kuliah</span></div>
+        <div class="cap-stat"><span class="num">6</span><span class="lbl" data-i18n="cap.stat.prodi">Program Studi</span></div>
+        <div class="cap-stat"><span class="num">3</span><span class="lbl" data-i18n="cap.stat.years3">Tahun Terakhir</span></div>
       </div>
-      <p>
+      <p data-i18n="cap.teaching.text">
         Asisten dosen di Universitas Negeri Makassar untuk 18 mata kuliah lintas program studi —
         dari Kalkulus Dasar dan Persamaan Diferensial Biasa untuk prodi Matematika dan Geografi,
         hingga Pemodelan Matematika dan Pemodelan Matematika &amp; Statistik untuk mahasiswa S2
         Matematika, Statistika, Pendidikan Matematika, Bahasa Indonesia, dan Bahasa Inggris.
       </p>
-      <a href="#pengajaran" class="btn btn-ghost">Lihat daftar mata kuliah ↓</a>
+      <a href="#pengajaran" class="btn btn-ghost" data-i18n="cap.teaching.cta">Lihat daftar mata kuliah ↓</a>
     </div>
   </div>
 </section>
@@ -1029,13 +1076,13 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 <!-- 8. RESEARCH TIMELINE -->
 <section class="research">
   <div class="sec-head">
-    <span class="badge pill">C.1 · Penelitian</span>
-    <h2>Pengalaman Penelitian 5 Tahun Terakhir</h2>
-    <p>17 judul penelitian yang didanai oleh Kemendiktisaintek.</p>
+    <span class="badge pill" data-i18n="res.pill">C.1 · Penelitian</span>
+    <h2 data-i18n="res.title">Pengalaman Penelitian 5 Tahun Terakhir</h2>
+    <p data-i18n="res.desc">17 judul penelitian yang didanai oleh Kemendiktisaintek.</p>
   </div>
 
   <div class="timeline">
-    <div class="tl-year">2025 · 6 Penelitian</div>
+    <div class="tl-year">2025 · 6 <span data-i18n="res.count">Penelitian</span></div>
     <div class="tl-item"><span class="tl-num">01 / 2025</span><div>
       <p class="tl-title">Mitigasi Degradasi Mangrove dan Konservasi Populasi Kepiting Berbasis Budaya Lokal menggunakan Model Predator-Prey Vermeer RK-8 untuk di Pesisir Sulawesi Selatan</p>
       <p class="tl-src">Kemendiktisaintek</p></div></div>
@@ -1055,7 +1102,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
       <p class="tl-title">Pemodelan dan Analisis Matematika pada Penerapan Family Time berbasis Kearifan Lokal sebagai Solusi Kecanduan Game Online di Sulawesi Selatan</p>
       <p class="tl-src">Kemendiktisaintek</p></div></div>
 
-    <div class="tl-year">2024 · 9 Penelitian</div>
+    <div class="tl-year">2024 · 9 <span data-i18n="res.count">Penelitian</span></div>
     <div class="tl-item"><span class="tl-num">07 / 2024</span><div>
       <p class="tl-title">Ekplorasi Strategi Peningkatan Weilbeing Penderita Psycology Disorder berbasis Tari dan Bimbingan Konseling menggunakan model matematika dan big data di Sulsel</p>
       <p class="tl-src">Kemendiktisaintek</p></div></div>
@@ -1084,12 +1131,12 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
       <p class="tl-title">Solusi Numerik Model Matematika pada Generasi Diabetes Akibat Pola Hidup Kurang Sehat dengan Metode Homotopi Pertubasi (Studi Kasus Mahasiswa Matematika FMIPA UNM)</p>
       <p class="tl-src">Kemendiktisaintek</p></div></div>
 
-    <div class="tl-year">2021 · 1 Penelitian</div>
+    <div class="tl-year">2021 · 1 <span data-i18n="res.count">Penelitian</span></div>
     <div class="tl-item"><span class="tl-num">16 / 2021</span><div>
       <p class="tl-title">Analisis Dan Simulasi Model Matematika SE2CFS Pada Kasus Krisis Moral Generasi Z Di Wilayah Kota Makassar</p>
       <p class="tl-src">Kemendiktisaintek</p></div></div>
 
-    <div class="tl-year">2020 · 1 Penelitian</div>
+    <div class="tl-year">2020 · 1 <span data-i18n="res.count">Penelitian</span></div>
     <div class="tl-item"><span class="tl-num">17 / 2020</span><div>
       <p class="tl-title">Solusi Permasalahan Kasus Sosial Kemiskinan Akibat Covid-19 Menggunakan Permodelan Matematika Pada Wilayah Kota Makassar</p>
       <p class="tl-src">Kemendiktisaintek</p></div></div>
@@ -1099,13 +1146,13 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 <!-- 9. PUBLIKASI -->
 <section class="publications" id="publikasi">
   <div class="sec-head">
-    <span class="badge pill">E · Artikel Ilmiah</span>
-    <h2>Publikasi Jurnal 5 Tahun Terakhir</h2>
-    <p>47+ artikel ilmiah di jurnal nasional dan internasional, termasuk jurnal bereputasi.</p>
+    <span class="badge pill" data-i18n="pub.pill">E · Artikel Ilmiah</span>
+    <h2 data-i18n="pub.title">Publikasi Jurnal 5 Tahun Terakhir</h2>
+    <p data-i18n="pub.desc">47+ artikel ilmiah di jurnal nasional dan internasional, termasuk jurnal bereputasi.</p>
   </div>
 
   <div class="pub-controls">
-    <button class="pub-filter is-active" data-filter="all">Semua</button>
+    <button class="pub-filter is-active" data-filter="all" data-i18n="pub.filter.all">Semua</button>
     <button class="pub-filter" data-filter="2026">2026</button>
     <button class="pub-filter" data-filter="2025">2025</button>
     <button class="pub-filter" data-filter="2024">2024</button>
@@ -1118,48 +1165,48 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   <div class="pub-list">
     <div class="pub-item" data-year="2026"><div class="pub-year">2026<span>01</span></div><div>
       <p class="pub-title">Strategi Coping Stres Dalam Mengatasi Problema Akademik Mahasiswa FTK Universitas Islam Negeri Antasari Banjarmasin</p>
-      <p class="pub-journal"><b>Tarbiyah dan Keguruan</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Tarbiyah dan Keguruan</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2026"><div class="pub-year">2026<span>02</span></div><div>
       <p class="pub-title">Analisis Career FOMO, Kepuasan Kerja dan Stres Kerja Terhadap Keinginan Pindah Kerja Karyawan Generasi Z Di BFI Finance</p>
-      <p class="pub-journal"><b>Jurnal Manajemen Ekonomi dan Akuntansi</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Jurnal Manajemen Ekonomi dan Akuntansi</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
 
     <div class="pub-item" data-year="2025"><div class="pub-year">2025<span>03</span></div><div>
       <p class="pub-title">Modelling the impact of pneumonia influenced by air pollution and climate change: a numerical approach in South Sulawesi</p>
-      <p class="pub-journal"><b>International Journal of Simulation and Process Modelling</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>International Journal of Simulation and Process Modelling</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2025"><div class="pub-year">2025<span>04</span></div><div>
       <p class="pub-title">SEIRS-SISII Modeling with RK8 (7) to Explore Local Wisdom in Combating Climate-Induced Dengue Spread through Wolbachia Vectors in South-West Sulawesi</p>
-      <p class="pub-journal"><b>IAENG International Journal of Applied Mathematics</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>IAENG International Journal of Applied Mathematics</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2025"><div class="pub-year">2025<span>05</span></div><div>
       <p class="pub-title">SMSEA Mathematical with MPH-RK Orde 6: Big Data-Driven Exploration of Dance and Counseling-Based Well-being Enhancement Strategies for Individuals with Psychological Disorders</p>
-      <p class="pub-journal"><b>IAENG International Journal of Applied Mathematics</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>IAENG International Journal of Applied Mathematics</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2025"><div class="pub-year">2025<span>06</span></div><div>
       <p class="pub-title">The Effect of Public Service Quality on Public Satisfaction with Administrative Services at the Palupi Village Head Office</p>
-      <p class="pub-journal"><b>EKOMBIS REVIEW: Jurnal Ilmiah Ekonomi dan Bisnis</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>EKOMBIS REVIEW: Jurnal Ilmiah Ekonomi dan Bisnis</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2025"><div class="pub-year">2025<span>07</span></div><div>
       <p class="pub-title">The PKM: Enhancing the Capacity and Professionalism of the Merah Putih Cooperative through Business Proposal Writing Training in Lumika Village, Bonehau District, Mamuju Regency</p>
-      <p class="pub-journal"><b>Mattawang: Jurnal Pengabdian Masyarakat</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Mattawang: Jurnal Pengabdian Masyarakat</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2025"><div class="pub-year">2025<span>08</span></div><div>
       <p class="pub-title">The Optimization of Home Yard Utilization for Strengthening Household Economy Through the Mini Garden Program in Ralleanak Utara Village, Aralle District, Mamasa Regency</p>
-      <p class="pub-journal"><b>Mattawang: Jurnal Pengabdian Masyarakat</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Mattawang: Jurnal Pengabdian Masyarakat</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2025"><div class="pub-year">2025<span>09</span></div><div>
       <p class="pub-title">Simulating the Dynamics of Early Marriage and Marital Stability Using SERH Mathematical Models</p>
-      <p class="pub-journal"><b>Jurnal Varian</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Jurnal Varian</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2025"><div class="pub-year">2025<span>10</span></div><div>
       <p class="pub-title">The Analysis and Simulation of Consumer Behavior Towards Product Boycotts Using Mathematical Modeling in North Sangatta District</p>
-      <p class="pub-journal"><b>Journal of Mathematics, Computations and Statistics</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Journal of Mathematics, Computations and Statistics</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2025"><div class="pub-year">2025<span>11</span></div><div>
       <p class="pub-title">Exploring The Future Of Health Through The Selr Mathematical Model With The 4th Order Pertubation Homotopy Method On The Risk Of Diabetes Among Mathematics Students Of Fmipa Unm</p>
-      <p class="pub-journal"><b>Jurnal Ilmiah Ilmu Pengetahuan Alam</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Jurnal Ilmiah Ilmu Pengetahuan Alam</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2025"><div class="pub-year">2025<span>12</span></div><div>
       <p class="pub-title">Exploring The Future of Health Through The SELR Mathematical Model with Time Delay</p>
-      <p class="pub-journal"><b>Proximal: Jurnal Penelitian Matematika</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Proximal: Jurnal Penelitian Matematika</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
 
     <div class="pub-item" data-year="2024"><div class="pub-year">2024<span>27</span></div><div>
       <p class="pub-title">Unveiling Ammotere Abbaji: Exploring Silariang Perpetrators With SEIR Mathematical Modeling Among The Bugis Community In South Sulawesi</p>
-      <p class="pub-journal"><b>Journal of Mathematics, Computations and Statistics</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Journal of Mathematics, Computations and Statistics</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2024"><div class="pub-year">2024<span>28</span></div><div>
       <p class="pub-title">PKM Meningkatkan Pengetahuan dan Keterampilan Mitra Tentang Kewirausahaan Bagi Kelompok Mitra Dusun Kanari Desa Mallongi-Longi Kabupaten Pinrang</p>
-      <p class="pub-journal"><b>—</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>—</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2024"><div class="pub-year">2024<span>29</span></div><div>
       <p class="pub-title">Solusi masalah bullying menggunakan pemodelan matematika dengan bimbingan dan konseling pada pelajar madrasah di kabupaten gowa</p>
       <p class="pub-journal"><b>Proximal: Jurnal Penelitian Matematika dan Pendidikan Matematika</b><span class="pub-cite">Sitasi 2</span></p></div></div>
@@ -1178,13 +1225,13 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
       <p class="pub-journal"><b>Journal of English Education</b><span class="pub-cite">Sitasi 3</span></p></div></div>
     <div class="pub-item" data-year="2023"><div class="pub-year">2023<span>34</span></div><div>
       <p class="pub-title">Health Promotion Analysis And Simulation On Increasing Vaccination With Using The SRV Model In Pinrang District</p>
-      <p class="pub-journal"><b>BAREKENG: Jurnal Ilmu Matematika dan Terapan</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>BAREKENG: Jurnal Ilmu Matematika dan Terapan</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2023"><div class="pub-year">2023<span>35</span></div><div>
       <p class="pub-title">The NADI Mathematical Model on the Danger Level of the Bili-Bili Dam</p>
-      <p class="pub-journal"><b>Jurnal Varian</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Jurnal Varian</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2023"><div class="pub-year">2023<span>36</span></div><div>
       <p class="pub-title">The Analysis of SEIR Mathematical Model Time Delay as The Solution of Tuberculosis Transmission in South Sulawesi</p>
-      <p class="pub-journal"><b>E3S Web of Conferences</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>E3S Web of Conferences</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2023"><div class="pub-year">2023<span>37</span></div><div>
       <p class="pub-title">Implementasi Fungsi Manajemen Pemasaran Dalam Kesejahteraan Anggota Pada Koperasi Mina Jaya Kelurahan Kangkung Kecamatan Bumi Waras</p>
       <p class="pub-journal"><b>UIN Raden Intan Lampung</b><span class="pub-cite">Sitasi 2</span></p></div></div>
@@ -1197,10 +1244,10 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
       <p class="pub-journal"><b>Jurnal Teknologi Informasi</b><span class="pub-cite">Sitasi 6</span></p></div></div>
     <div class="pub-item" data-year="2022"><div class="pub-year">2022<span>40</span></div><div>
       <p class="pub-title">Pengaruh Komunikasi, Disiplin Kerja, Dan Keterampilan Kerja Terhadap Produktivitas Karyawan Pada PT. Telkom Akses Area Palembang</p>
-      <p class="pub-journal"><b>Universitas Tridinanti Palembang</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Universitas Tridinanti Palembang</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
     <div class="pub-item" data-year="2022"><div class="pub-year">2022<span>41</span></div><div>
       <p class="pub-title">Manifestasi Electrical Resistivity Tomography Menggunakan Bahasa Pemrograman Python Berbasis Website</p>
-      <p class="pub-journal"><b>Teknik Geofisika</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Teknik Geofisika</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
 
     <div class="pub-item" data-year="2021"><div class="pub-year">2021<span>42</span></div><div>
       <p class="pub-title">Klasifikasi Diagnosis Penyakit Covid-19 Menggunakan Metode Decision Tree</p>
@@ -1220,16 +1267,16 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
       <p class="pub-journal"><b>Universitas Hasanuddin</b><span class="pub-cite">Sitasi 1</span></p></div></div>
     <div class="pub-item" data-year="2020"><div class="pub-year">2020<span>47</span></div><div>
       <p class="pub-title">Pengaruh Functional Quality Dan Corporate Image Terhadap Word Of Mouth Communication Dimediasi Customer Satisfaction Pada Pengguna Jasa Layanan Grab</p>
-      <p class="pub-journal"><b>Universitas Putra Bangsa</b><span class="pub-cite">Sitasi —</span></p></div></div>
+      <p class="pub-journal"><b>Universitas Putra Bangsa</b><span class="pub-cite" data-i18n="pub.citation">Sitasi —</span></p></div></div>
   </div>
 </section>
 
 <!-- 10. PENGABDIAN -->
 <section class="research" id="pengabdian">
   <div class="sec-head">
-    <span class="badge pill">D · Pengabdian Masyarakat</span>
-    <h2>Pengabdian Kepada Masyarakat</h2>
-    <p>Lima program pengabdian dalam lima tahun terakhir di Sulawesi Barat dan Sulawesi Selatan.</p>
+    <span class="badge pill" data-i18n="srv.pill">D · Pengabdian Masyarakat</span>
+    <h2 data-i18n="srv.title">Pengabdian Kepada Masyarakat</h2>
+    <p data-i18n="srv.desc">Lima program pengabdian dalam lima tahun terakhir di Sulawesi Barat dan Sulawesi Selatan.</p>
   </div>
   <div class="timeline">
     <div class="tl-year">2025</div>
@@ -1255,9 +1302,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 <!-- 11. HKI -->
 <section class="hki">
   <div class="sec-head">
-    <span class="badge pill">H · HKI</span>
-    <h2>Hak Kekayaan Intelektual</h2>
-    <p>Enam pencatatan Hak Cipta software pemodelan matematika, 2021–2024.</p>
+    <span class="badge pill" data-i18n="hki.pill">H · HKI</span>
+    <h2 data-i18n="hki.title">Hak Kekayaan Intelektual</h2>
+    <p data-i18n="hki.desc">Enam pencatatan Hak Cipta software pemodelan matematika, 2021–2024.</p>
   </div>
   <div class="hki-grid">
     <div class="hki-card"><span class="micro">HKI · 2024</span>
@@ -1278,58 +1325,63 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 <!-- 12. PENGAJARAN -->
 <section class="teaching" id="pengajaran">
   <div class="sec-head">
-    <span class="badge pill">I · Pengajaran</span>
-    <h2>Pengalaman Mengajar 3 Tahun Terakhir</h2>
-    <p>Asisten dosen di Universitas Negeri Makassar untuk 18 mata kuliah lintas program studi.</p>
+    <span class="badge pill" data-i18n="teach.pill">I · Pengajaran</span>
+    <h2 data-i18n="teach.title">Pengalaman Mengajar 3 Tahun Terakhir</h2>
+    <p data-i18n="teach.desc">Asisten dosen di Universitas Negeri Makassar untuk 18 mata kuliah lintas program studi.</p>
   </div>
   <div class="teach-table">
-    <div class="teach-row head"><span>No</span><span>Mata Kuliah</span><span>Program Studi</span><span>Peran</span></div>
-    <div class="teach-row"><span class="teach-num">01</span><span class="teach-name">Pemodelan Matematika</span><span class="teach-prog">Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">02</span><span class="teach-name">Pemodelan Statistika</span><span class="teach-prog">Statistika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">03</span><span class="teach-name">Kalkulus Dasar</span><span class="teach-prog">Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">04</span><span class="teach-name">Matematika Dasar</span><span class="teach-prog">Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">05</span><span class="teach-name">Matematika Dasar</span><span class="teach-prog">Geografi</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">06</span><span class="teach-name">Sistem Dinamik</span><span class="teach-prog">Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">07</span><span class="teach-name">Persamaan Diferensial Biasa</span><span class="teach-prog">Geografi</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">08</span><span class="teach-name">Persamaan Diferensial Parsial</span><span class="teach-prog">Geografi</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">09</span><span class="teach-name">Kewirausahaan</span><span class="teach-prog">Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">10</span><span class="teach-name">Teori Peluang</span><span class="teach-prog">Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">11</span><span class="teach-name">Teori Penyampelan</span><span class="teach-prog">Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">12</span><span class="teach-name">Simulasi Komputer</span><span class="teach-prog">Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">13</span><span class="teach-name">Metode Penelitian</span><span class="teach-prog">Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">14</span><span class="teach-name">Matematika Aktuaria</span><span class="teach-prog">Aktuarian</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">15</span><span class="teach-name">Matematika Aktuaria</span><span class="teach-prog">Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">16</span><span class="teach-name">Pemodelan Matematika Ekonomi</span><span class="teach-prog">Aktuaria</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">17</span><span class="teach-name">Pemodelan Matematika</span><span class="teach-prog">S2 Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">18</span><span class="teach-name">Pemodelan Matematika</span><span class="teach-prog">S2 Pendidikan Matematika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">19</span><span class="teach-name">Pemodelan Matematika dan Statistik</span><span class="teach-prog">S2 Statistika</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">20</span><span class="teach-name">Pemodelan Matematika dan Statistik</span><span class="teach-prog">S2 Bahasa Indonesia</span><span class="teach-role">Asisten Dosen</span></div>
-    <div class="teach-row"><span class="teach-num">21</span><span class="teach-name">Pemodelan Matematika dan Statistik</span><span class="teach-prog">S2 Bahasa Inggris</span><span class="teach-role">Asisten Dosen</span></div>
+    <div class="teach-row head">
+      <span data-i18n="teach.no">No</span>
+      <span data-i18n="teach.course">Mata Kuliah</span>
+      <span data-i18n="teach.prodi">Program Studi</span>
+      <span data-i18n="teach.role">Peran</span>
+    </div>
+    <div class="teach-row"><span class="teach-num">01</span><span class="teach-name">Pemodelan Matematika</span><span class="teach-prog">Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">02</span><span class="teach-name">Pemodelan Statistika</span><span class="teach-prog">Statistika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">03</span><span class="teach-name">Kalkulus Dasar</span><span class="teach-prog">Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">04</span><span class="teach-name">Matematika Dasar</span><span class="teach-prog">Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">05</span><span class="teach-name">Matematika Dasar</span><span class="teach-prog">Geografi</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">06</span><span class="teach-name">Sistem Dinamik</span><span class="teach-prog">Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">07</span><span class="teach-name">Persamaan Diferensial Biasa</span><span class="teach-prog">Geografi</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">08</span><span class="teach-name">Persamaan Diferensial Parsial</span><span class="teach-prog">Geografi</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">09</span><span class="teach-name">Kewirausahaan</span><span class="teach-prog">Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">10</span><span class="teach-name">Teori Peluang</span><span class="teach-prog">Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">11</span><span class="teach-name">Teori Penyampelan</span><span class="teach-prog">Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">12</span><span class="teach-name">Simulasi Komputer</span><span class="teach-prog">Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">13</span><span class="teach-name">Metode Penelitian</span><span class="teach-prog">Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">14</span><span class="teach-name">Matematika Aktuaria</span><span class="teach-prog">Aktuarian</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">15</span><span class="teach-name">Matematika Aktuaria</span><span class="teach-prog">Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">16</span><span class="teach-name">Pemodelan Matematika Ekonomi</span><span class="teach-prog">Aktuaria</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">17</span><span class="teach-name">Pemodelan Matematika</span><span class="teach-prog">S2 Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">18</span><span class="teach-name">Pemodelan Matematika</span><span class="teach-prog">S2 Pendidikan Matematika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">19</span><span class="teach-name">Pemodelan Matematika dan Statistik</span><span class="teach-prog">S2 Statistika</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">20</span><span class="teach-name">Pemodelan Matematika dan Statistik</span><span class="teach-prog">S2 Bahasa Indonesia</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
+    <div class="teach-row"><span class="teach-num">21</span><span class="teach-name">Pemodelan Matematika dan Statistik</span><span class="teach-prog">S2 Bahasa Inggris</span><span class="teach-role" data-i18n="teach.roleValue">Asisten Dosen</span></div>
   </div>
 </section>
 
 <!-- 13. PENGHARGAAN -->
 <section class="awards" id="penghargaan">
   <div class="sec-head">
-    <span class="badge pill">J · Penghargaan</span>
-    <h2>Penghargaan 10 Tahun Terakhir</h2>
-    <p>Dari pemerintah, asosiasi, dan institusi lainnya.</p>
+    <span class="badge pill" data-i18n="awd.pill">J · Penghargaan</span>
+    <h2 data-i18n="awd.title">Penghargaan 10 Tahun Terakhir</h2>
+    <p data-i18n="awd.desc">Dari pemerintah, asosiasi, dan institusi lainnya.</p>
   </div>
   <div class="awards-grid">
-    <div class="award"><div class="award-year">2024</div><p class="award-title">Presenter Terbaik</p><p class="award-org">ICMA 2024</p></div>
-    <div class="award"><div class="award-year">2023</div><p class="award-title">Presenter Terbaik</p><p class="award-org">ICSTE 2023</p></div>
-    <div class="award"><div class="award-year">2022</div><p class="award-title">Presenter Terbaik</p><p class="award-org">ICOSMED 2022</p></div>
-    <div class="award"><div class="award-year">2021</div><p class="award-title">Setara Medali Perak PKM-RSH 1 Kategori Presentasi</p><p class="award-org">PIMNAS 34 Universitas Sumatra Utara · Kemendikbudristek</p></div>
-    <div class="award"><div class="award-year">2021</div><p class="award-title">Peserta PIMNAS 34</p><p class="award-org">Universitas Sumatra Utara · Kemendikbudristek</p></div>
-    <div class="award"><div class="award-year">2021</div><p class="award-title">Lolos Pendanaan PKM-RSH</p><p class="award-org">Kemendikbudristek</p></div>
-    <div class="award"><div class="award-year">2020</div><p class="award-title">Lolos Pendanaan PKM-RE</p><p class="award-org">Kemendikbudristek</p></div>
-    <div class="award"><div class="award-year">2016</div><p class="award-title">Juara 2 Desain Maskot KPU</p><p class="award-org">Komisi Pemilihan Umum Sulawesi Barat</p></div>
-    <div class="award"><div class="award-year">2015</div><p class="award-title">Harapan 1 Desain Logo MUNAS HIPMI XVI</p><p class="award-org">BPP Himpunan Pengusaha Muda Indonesia</p></div>
-    <div class="award"><div class="award-year">2015</div><p class="award-title">Juara Desain Logo UNIBOS</p><p class="award-org">Universitas Bosowa</p></div>
-    <div class="award"><div class="award-year">2015</div><p class="award-title">10 Besar Ujian Masuk Perguruan Tinggi</p><p class="award-org">Universitas Bosowa</p></div>
-    <div class="award"><div class="award-year">2013</div><p class="award-title">Juara 2 Desain Poster FLS2N Tingkat Provinsi</p><p class="award-org">Pemerintah Provinsi Sulawesi Barat</p></div>
-    <div class="award"><div class="award-year">2013</div><p class="award-title">Juara Desain Poster FLS2N Tingkat Kabupaten</p><p class="award-org">Pemerintah Kabupaten Mamuju</p></div>
-    <div class="award"><div class="award-year">2013</div><p class="award-title">Harapan 1 OSN Biologi Tingkat Kabupaten</p><p class="award-org">Pemerintah Kabupaten Mamuju</p></div>
+    <div class="award"><div class="award-year">2024</div><p class="award-title" data-i18n="awd.bestPresenter">Presenter Terbaik</p><p class="award-org">ICMA 2024</p></div>
+    <div class="award"><div class="award-year">2023</div><p class="award-title" data-i18n="awd.bestPresenter">Presenter Terbaik</p><p class="award-org">ICSTE 2023</p></div>
+    <div class="award"><div class="award-year">2022</div><p class="award-title" data-i18n="awd.bestPresenter">Presenter Terbaik</p><p class="award-org">ICOSMED 2022</p></div>
+    <div class="award"><div class="award-year">2021</div><p class="award-title" data-i18n="awd.silver">Setara Medali Perak PKM-RSH 1 Kategori Presentasi</p><p class="award-org">PIMNAS 34 Universitas Sumatra Utara · Kemendikbudristek</p></div>
+    <div class="award"><div class="award-year">2021</div><p class="award-title" data-i18n="awd.pimnas">Peserta PIMNAS 34</p><p class="award-org">Universitas Sumatra Utara · Kemendikbudristek</p></div>
+    <div class="award"><div class="award-year">2021</div><p class="award-title" data-i18n="awd.pkmsh">Lolos Pendanaan PKM-RSH</p><p class="award-org">Kemendikbudristek</p></div>
+    <div class="award"><div class="award-year">2020</div><p class="award-title" data-i18n="awd.pkmre">Lolos Pendanaan PKM-RE</p><p class="award-org">Kemendikbudristek</p></div>
+    <div class="award"><div class="award-year">2016</div><p class="award-title" data-i18n="awd.mascot">Juara 2 Desain Maskot KPU</p><p class="award-org">Komisi Pemilihan Umum Sulawesi Barat</p></div>
+    <div class="award"><div class="award-year">2015</div><p class="award-title" data-i18n="awd.hipmi">Harapan 1 Desain Logo MUNAS HIPMI XVI</p><p class="award-org">BPP Himpunan Pengusaha Muda Indonesia</p></div>
+    <div class="award"><div class="award-year">2015</div><p class="award-title" data-i18n="awd.unibos">Juara Desain Logo UNIBOS</p><p class="award-org">Universitas Bosowa</p></div>
+    <div class="award"><div class="award-year">2015</div><p class="award-title" data-i18n="awd.top10">10 Besar Ujian Masuk Perguruan Tinggi</p><p class="award-org">Universitas Bosowa</p></div>
+    <div class="award"><div class="award-year">2013</div><p class="award-title" data-i18n="awd.posterProv">Juara 2 Desain Poster FLS2N Tingkat Provinsi</p><p class="award-org">Pemerintah Provinsi Sulawesi Barat</p></div>
+    <div class="award"><div class="award-year">2013</div><p class="award-title" data-i18n="awd.posterKab">Juara Desain Poster FLS2N Tingkat Kabupaten</p><p class="award-org">Pemerintah Kabupaten Mamuju</p></div>
+    <div class="award"><div class="award-year">2013</div><p class="award-title" data-i18n="awd.osn">Harapan 1 OSN Biologi Tingkat Kabupaten</p><p class="award-org">Pemerintah Kabupaten Mamuju</p></div>
   </div>
 </section>
 
@@ -1341,9 +1393,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
     <span class="micro" style="color:rgba(255,255,255,.4)">Ridho · UNM</span>
   </div>
   <div class="book-info">
-    <span class="micro">G · Penulisan Buku</span>
-    <h3>PEMODELAN MATEMATIKA: Solusi Penyebaran Covid-19 dan Pneumonia Melalui Pendekatan Berbasis Intervensi Masyarakat</h3>
-    <p>
+    <span class="micro" data-i18n="book.pill">G · Penulisan Buku</span>
+    <h3 data-i18n="book.title">PEMODELAN MATEMATIKA: Solusi Penyebaran Covid-19 dan Pneumonia Melalui Pendekatan Berbasis Intervensi Masyarakat</h3>
+    <p data-i18n="book.desc">
       Buku ini membahas pemodelan matematika untuk penyebaran Covid-19 dan pneumonia dengan
       pendekatan intervensi masyarakat. Ditulis berdasarkan pengalaman riset penulis di
       Sulawesi Selatan dan diterbitkan pada tahun 2025.
@@ -1354,49 +1406,65 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 <!-- 15. SEMINAR & KEGIATAN -->
 <section class="activities">
   <div class="sec-head">
-    <span class="badge pill">F · K · Seminar &amp; Kegiatan</span>
-    <h2>Penyampaian Makalah &amp; Kegiatan Ilmiah</h2>
-    <p>Partisipasi dalam seminar, konferensi, dan kegiatan akademik lainnya.</p>
+    <span class="badge pill" data-i18n="act.pill">F · K · Seminar &amp; Kegiatan</span>
+    <h2 data-i18n="act.title">Penyampaian Makalah &amp; Kegiatan Ilmiah</h2>
+    <p data-i18n="act.desc">Partisipasi dalam seminar, konferensi, dan kegiatan akademik lainnya.</p>
   </div>
   <div class="act-list">
-    <div class="act-item"><span class="act-role">Presenter</span><span class="act-name">International Conference On Sciences, Mathematics, And Education 2022</span><span class="act-place">Semarang · 6 Oktober 2022</span></div>
-    <div class="act-item"><span class="act-role">Presenter</span><span class="act-name">Innovative Research on Mathematics, Sciences and Education in Post Covid-19 Pandemic Towards Society 5.0</span><span class="act-place">Gorontalo · 14 Oktober 2022</span></div>
-    <div class="act-item"><span class="act-role">Pemakalah</span><span class="act-name">Seminar Nasional Indo MS 2022</span><span class="act-place">Makassar · 19 November 2022</span></div>
-    <div class="act-item"><span class="act-role">Pemateri</span><span class="act-name">Workshop PKM 2021</span><span class="act-place">FMIPA · 1 November 2021</span></div>
-    <div class="act-item"><span class="act-role">Peserta</span><span class="act-name">Seminar Nasional "Adakah Ide Untuk Indonesia?"</span><span class="act-place">Aula Stie AMKOP Makassar · 6 November 2019</span></div>
-    <div class="act-item"><span class="act-role">Peserta</span><span class="act-name">Road Show Seminar Motivasi Kita Indonesia</span><span class="act-place">Menara Phinisi · 18 Maret 2018</span></div>
-    <div class="act-item"><span class="act-role">Peserta</span><span class="act-name">Seminar Usaha YOT</span><span class="act-place">Graha Pena · 10 November 2017</span></div>
-    <div class="act-item"><span class="act-role">Peserta</span><span class="act-name">DKMM 2016</span><span class="act-place">Jurusan Matematika FMIPA UNM Makassar · 2017</span></div>
-    <div class="act-item"><span class="act-role">Panitia</span><span class="act-name">Inagurasi Poligon</span><span class="act-place">Graha Pena · 18 Maret 2017</span></div>
+    <div class="act-item"><span class="act-role" data-i18n="act.role.presenter">Presenter</span><span class="act-name">International Conference On Sciences, Mathematics, And Education 2022</span><span class="act-place">Semarang · 6 Oktober 2022</span></div>
+    <div class="act-item"><span class="act-role" data-i18n="act.role.presenter">Presenter</span><span class="act-name">Innovative Research on Mathematics, Sciences and Education in Post Covid-19 Pandemic Towards Society 5.0</span><span class="act-place">Gorontalo · 14 Oktober 2022</span></div>
+    <div class="act-item"><span class="act-role" data-i18n="act.role.speaker">Pemakalah</span><span class="act-name">Seminar Nasional Indo MS 2022</span><span class="act-place">Makassar · 19 November 2022</span></div>
+    <div class="act-item"><span class="act-role" data-i18n="act.role.speaker2">Pemateri</span><span class="act-name">Workshop PKM 2021</span><span class="act-place">FMIPA · 1 November 2021</span></div>
+    <div class="act-item"><span class="act-role" data-i18n="act.role.participant">Peserta</span><span class="act-name">Seminar Nasional "Adakah Ide Untuk Indonesia?"</span><span class="act-place">Aula Stie AMKOP Makassar · 6 November 2019</span></div>
+    <div class="act-item"><span class="act-role" data-i18n="act.role.participant">Peserta</span><span class="act-name">Road Show Seminar Motivasi Kita Indonesia</span><span class="act-place">Menara Phinisi · 18 Maret 2018</span></div>
+    <div class="act-item"><span class="act-role" data-i18n="act.role.participant">Peserta</span><span class="act-name">Seminar Usaha YOT</span><span class="act-place">Graha Pena · 10 November 2017</span></div>
+    <div class="act-item"><span class="act-role" data-i18n="act.role.participant">Peserta</span><span class="act-name">DKMM 2016</span><span class="act-place">Jurusan Matematika FMIPA UNM Makassar · 2017</span></div>
+    <div class="act-item"><span class="act-role" data-i18n="act.role.committee">Panitia</span><span class="act-name">Inagurasi Poligon</span><span class="act-place">Graha Pena · 18 Maret 2017</span></div>
   </div>
 </section>
 
 <!-- 16. KONTAK -->
 <section class="access scan" id="kontak">
-  <span class="badge badge-lime" style="margin-bottom:22px;display:inline-block;">Kontak</span>
-  <h2 class="px" style="font-size:clamp(20px,3.6vw,40px);margin-bottom:24px;line-height:1.4">
+  <span class="badge badge-lime" style="margin-bottom:22px;display:inline-block;" data-i18n="ct.pill">Kontak</span>
+  <h2 class="px" style="font-size:clamp(20px,3.6vw,40px);margin-bottom:24px;line-height:1.4" data-i18n-html="ct.title">
     Terbuka untuk kolaborasi<br>riset &amp; pengabdian
   </h2>
-  <p class="access-legal">
+  <p class="access-legal" data-i18n="ct.desc">
     Terbuka untuk kolaborasi penelitian, penulisan artikel ilmiah, pengabdian masyarakat,
     dan pengajaran. Berdomisili di Mamuju, Sulawesi Barat.
     Respons biasanya dalam 1–2 hari kerja.
   </p>
   <div class="access-grid">
-    <div class="access-cell"><span class="micro">Email</span><strong>ridhographicdesigner@gmail.com</strong></div>
-    <div class="access-cell"><span class="micro">Telepon</span><strong>0853 4212 7321</strong></div>
-    <div class="access-cell"><span class="micro">Domisili</span><strong>Mamuju, Sulawesi Barat</strong></div>
+    <div class="access-cell">
+      <span class="micro" data-i18n="ct.email">Email</span>
+      <strong style="font-size:12.5px">ridhographicdesigner@gmail.com<br>andimuhammadridhoyusufsainonan@gmail.com</strong>
+    </div>
+    <div class="access-cell">
+      <span class="micro" data-i18n="ct.phone">Telepon 🔒</span>
+      <div class="locked-field" data-field="phone">
+        <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        <span class="locked-text">•••• •••• ••••</span>
+      </div>
+    </div>
+    <div class="access-cell">
+      <span class="micro" data-i18n="ct.domicile">Domisili</span>
+      <strong data-i18n="ct.domicileValue">Mamuju, Sulawesi Barat</strong>
+    </div>
   </div>
   <div class="access-actions">
-    <a href="mailto:ridhographicdesigner@gmail.com" class="btn btn-primary">Kirim Email</a>
-    <a href="#" class="btn btn-secondary">Unduh CV (PDF)</a>
+    <a href="mailto:ridhographicdesigner@gmail.com" class="btn btn-primary" data-i18n="ct.sendEmail">Kirim Email</a>
+    <a href="#" class="btn btn-secondary" data-i18n="ct.downloadCV">Unduh CV (PDF)</a>
   </div>
 </section>
 
 <!-- 17. FOOTER -->
 <footer class="footer scan">
   <div class="footer-related">
-    <span class="related-label">Terkait</span>
+    <span class="related-label" data-i18n="ft.related">Terkait</span>
     <div class="related-list">
       <a href="#">Universitas Negeri Makassar</a>
       <a href="#">Kemendiktisaintek</a>
@@ -1417,12 +1485,12 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
       AMR
     </div>
     <div class="footer-links">
-      <a href="#profil">Profil</a>
-      <a href="#pendidikan">Pendidikan</a>
-      <a href="#riset">Riset</a>
-      <a href="#publikasi">Publikasi</a>
-      <a href="#kontak">Kontak</a>
-      <a href="#">Privasi</a>
+      <a href="#profil" data-i18n="nav.profil">Profil</a>
+      <a href="#pendidikan" data-i18n="nav.pendidikan">Pendidikan</a>
+      <a href="#riset" data-i18n="nav.riset">Riset</a>
+      <a href="#publikasi" data-i18n="nav.publikasi">Publikasi</a>
+      <a href="#kontak" data-i18n="nav.kontak">Kontak</a>
+      <a href="#" data-i18n="ft.privacy">Privasi</a>
     </div>
   </div>
 </footer>
@@ -1441,13 +1509,13 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
         <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
       </svg>
     </div>
-    <h3 class="passcode-title">Data Terkunci</h3>
-    <p class="passcode-sub">Masukkan kode akses untuk<br>membuka data sensitif</p>
+    <h3 class="passcode-title" data-i18n="pc.title">Data Terkunci</h3>
+    <p class="passcode-sub" data-i18n-html="pc.sub">Masukkan kode akses untuk<br>membuka data sensitif</p>
     <input type="password" class="passcode-input" id="passcode-input"
            inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="off">
-    <div class="passcode-error" id="passcode-error">Kode akses salah</div>
-    <button class="passcode-btn" id="passcode-submit">Buka Akses</button>
-    <p class="passcode-hint">Hanya untuk keperluan verifikasi resmi</p>
+    <div class="passcode-error" id="passcode-error" data-i18n="pc.error">Kode akses salah</div>
+    <button class="passcode-btn" id="passcode-submit" data-i18n="pc.submit">Buka Akses</button>
+    <p class="passcode-hint" data-i18n="pc.hint">Hanya untuk keperluan verifikasi resmi</p>
   </div>
 </div>
 
@@ -1456,797 +1524,1382 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 <script>
 /* ============================================================
-   PETA INTERAKTIF PER KOTA/KABUPATEN
-   Data koordinat: BIG Gazeter & GitHub open source
-   API: Open-Meteo (gratis, tanpa API key) untuk AQI & Cuaca
+   LANGUAGE SYSTEM
    ============================================================ */
-
-var FIRMS_MAP_KEY = 'c6a4b324efbcdc1a20c6ed7c447803b3';
-
-/* ---------- Inisialisasi peta ---------- */
-var map = L.map('aqi-map', {
-  center: [-2.5, 118.0],
-  zoom: 5,
-  zoomControl: true,
-  attributionControl: true,
-  zoomAnimation: true,
-  fadeAnimation: true,
-  markerZoomAnimation: true
-});
-
-/* Basemap Esri Dark Gray Canvas */
-L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-  attribution: 'Basemap &copy; <a href="https://www.esri.com/">Esri</a>',
-  maxZoom: 16, minZoom: 0
-}).addTo(map);
-
-L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
-  maxZoom: 16, opacity: 0.9
-}).addTo(map);
-
-/* ============================================================
-   DATA KOTA/KABUPATEN INDONESIA
-   ============================================================ */
-var cities = [
-  { name: 'Banda Aceh', provinsi: 'Aceh', lat: 5.5483, lon: 95.3238 },
-  { name: 'Medan', provinsi: 'Sumatera Utara', lat: 3.5952, lon: 98.6722 },
-  { name: 'Binjai', provinsi: 'Sumatera Utara', lat: 3.6003, lon: 98.4853 },
-  { name: 'Padang', provinsi: 'Sumatera Barat', lat: -0.9471, lon: 100.4172 },
-  { name: 'Pekanbaru', provinsi: 'Riau', lat: 0.5071, lon: 101.4478 },
-  { name: 'Batam', provinsi: 'Kepulauan Riau', lat: 1.0863, lon: 104.0348 },
-  { name: 'Jambi', provinsi: 'Jambi', lat: -1.6101, lon: 103.6131 },
-  { name: 'Palembang', provinsi: 'Sumatera Selatan', lat: -2.9761, lon: 104.7754 },
-  { name: 'Bengkulu', provinsi: 'Bengkulu', lat: -3.8004, lon: 102.2655 },
-  { name: 'Bandar Lampung', provinsi: 'Lampung', lat: -5.3971, lon: 105.2663 },
-  { name: 'Pangkal Pinang', provinsi: 'Kepulauan Bangka Belitung', lat: -2.1316, lon: 106.1169 },
-  { name: 'Tanjungpinang', provinsi: 'Kepulauan Riau', lat: 0.9186, lon: 104.4665 },
-  { name: 'Jakarta Pusat', provinsi: 'DKI Jakarta', lat: -6.1805, lon: 106.8284 },
-  { name: 'Jakarta Selatan', provinsi: 'DKI Jakarta', lat: -6.2615, lon: 106.8106 },
-  { name: 'Bekasi', provinsi: 'Jawa Barat', lat: -6.2383, lon: 106.9756 },
-  { name: 'Depok', provinsi: 'Jawa Barat', lat: -6.4025, lon: 106.7942 },
-  { name: 'Bogor', provinsi: 'Jawa Barat', lat: -6.5971, lon: 106.8060 },
-  { name: 'Bandung', provinsi: 'Jawa Barat', lat: -6.9175, lon: 107.6191 },
-  { name: 'Cirebon', provinsi: 'Jawa Barat', lat: -6.7320, lon: 108.5523 },
-  { name: 'Semarang', provinsi: 'Jawa Tengah', lat: -6.9667, lon: 110.4167 },
-  { name: 'Surakarta', provinsi: 'Jawa Tengah', lat: -7.5755, lon: 110.8243 },
-  { name: 'Magelang', provinsi: 'Jawa Tengah', lat: -7.4698, lon: 110.2177 },
-  { name: 'Yogyakarta', provinsi: 'DI Yogyakarta', lat: -7.7956, lon: 110.3695 },
-  { name: 'Surabaya', provinsi: 'Jawa Timur', lat: -7.2575, lon: 112.7521 },
-  { name: 'Malang', provinsi: 'Jawa Timur', lat: -7.9666, lon: 112.6326 },
-  { name: 'Kediri', provinsi: 'Jawa Timur', lat: -7.8480, lon: 112.0178 },
-  { name: 'Jember', provinsi: 'Jawa Timur', lat: -8.1845, lon: 113.6681 },
-  { name: 'Banyuwangi', provinsi: 'Jawa Timur', lat: -8.2192, lon: 114.3691 },
-  { name: 'Serang', provinsi: 'Banten', lat: -6.1104, lon: 106.1497 },
-  { name: 'Tangerang', provinsi: 'Banten', lat: -6.1783, lon: 106.6319 },
-  { name: 'Denpasar', provinsi: 'Bali', lat: -8.6705, lon: 115.2126 },
-  { name: 'Mataram', provinsi: 'Nusa Tenggara Barat', lat: -8.5833, lon: 116.1167 },
-  { name: 'Kupang', provinsi: 'Nusa Tenggara Timur', lat: -10.1772, lon: 123.6070 },
-  { name: 'Pontianak', provinsi: 'Kalimantan Barat', lat: -0.0263, lon: 109.3425 },
-  { name: 'Palangka Raya', provinsi: 'Kalimantan Tengah', lat: -2.2080, lon: 113.9163 },
-  { name: 'Banjarmasin', provinsi: 'Kalimantan Selatan', lat: -3.3186, lon: 114.5944 },
-  { name: 'Samarinda', provinsi: 'Kalimantan Timur', lat: -0.5022, lon: 117.1536 },
-  { name: 'Balikpapan', provinsi: 'Kalimantan Timur', lat: -1.2379, lon: 116.8529 },
-  { name: 'Tarakan', provinsi: 'Kalimantan Utara', lat: 3.3273, lon: 117.5756 },
-  { name: 'Makassar', provinsi: 'Sulawesi Selatan', lat: -5.1477, lon: 119.4327 },
-  { name: 'Parepare', provinsi: 'Sulawesi Selatan', lat: -4.0135, lon: 119.6255 },
-  { name: 'Palopo', provinsi: 'Sulawesi Selatan', lat: -3.0000, lon: 120.2000 },
-  { name: 'Palu', provinsi: 'Sulawesi Tengah', lat: -0.8917, lon: 119.8707 },
-  { name: 'Kendari', provinsi: 'Sulawesi Tenggara', lat: -3.9450, lon: 122.4989 },
-  { name: 'Gorontalo', provinsi: 'Gorontalo', lat: 0.5435, lon: 123.0568 },
-  { name: 'Manado', provinsi: 'Sulawesi Utara', lat: 1.4748, lon: 124.8421 },
-  { name: 'Mamuju', provinsi: 'Sulawesi Barat', lat: -2.6766, lon: 118.8887 },
-  { name: 'Majene', provinsi: 'Sulawesi Barat', lat: -3.5403, lon: 118.9707 },
-  { name: 'Polewali', provinsi: 'Sulawesi Barat', lat: -3.4322, lon: 119.3436 },
-  { name: 'Mamasa', provinsi: 'Sulawesi Barat', lat: -2.9500, lon: 119.3667 },
-  { name: 'Ambon', provinsi: 'Maluku', lat: -3.6954, lon: 128.1814 },
-  { name: 'Ternate', provinsi: 'Maluku Utara', lat: 0.7900, lon: 127.3800 },
-  { name: 'Jayapura', provinsi: 'Papua', lat: -2.5916, lon: 140.6690 },
-  { name: 'Sorong', provinsi: 'Papua Barat', lat: -0.8762, lon: 131.2558 },
-  { name: 'Manokwari', provinsi: 'Papua Barat', lat: -0.8615, lon: 134.0620 },
-  { name: 'Merauke', provinsi: 'Papua', lat: -8.4932, lon: 140.4018 }
-];
-
-/* ---------- Layer Groups dengan Marker Cluster ---------- */
-var aqiCluster = L.markerClusterGroup({
-  maxClusterRadius: 60,
-  disableClusteringAtZoom: 9,
-  spiderfyOnMaxZoom: true,
-  showCoverageOnHover: false,
-  zoomToBoundsOnClick: true,
-  iconCreateFunction: function(cluster){
-    var count = cluster.getChildCount();
-    return L.divIcon({
-      html: '<div style="background:rgba(10,10,10,.85);border:2px solid #d7f36a;color:#d7f36a;' +
-            'border-radius:50%;width:36px;height:36px;display:grid;place-items:center;' +
-            'font-family:var(--px);font-size:9px;box-shadow:0 0 16px rgba(215,243,106,.4);' +
-            'backdrop-filter:blur(6px);">' + count + '</div>',
-      className: 'custom-cluster',
-      iconSize: [36, 36],
-      iconAnchor: [18, 18]
-    });
+var I18N = {
+  id: {
+    'topbar.role': 'Asisten Dosen & Peneliti',
+    'hero.tagline': 'Pemodelan matematika, simulasi numerik, dan analisis data untuk masalah sosial, kesehatan, dan lingkungan — dari krisis moral Gen Z hingga konservasi mangrove di Sulawesi.',
+    'hero.badge1': '17 Riset Kemendiktisaintek',
+    'hero.badge2': '47+ Artikel Ilmiah',
+    'hero.badge3': '6 HKI Software',
+    'hero.cta': 'Lihat Riwayat Hidup',
+    'hero.scroll': 'Scroll',
+    'nav.profil': 'Profil',
+    'nav.pendidikan': 'Pendidikan',
+    'nav.riset': 'Riset',
+    'nav.publikasi': 'Publikasi',
+    'nav.pengabdian': 'Pengabdian',
+    'nav.pengajaran': 'Pengajaran',
+    'nav.penghargaan': 'Penghargaan',
+    'nav.kontak': 'Kontak',
+    'manifesto.title': 'Matematika bukan sekadar angka —<br>ia cara membaca persoalan sosial',
+    'manifesto.text': 'Lulusan S1 dan S2 Matematika Universitas Negeri Makassar dengan fokus pemodelan matematika dan simulasi numerik. Selama lima tahun terakhir terlibat dalam 17 penelitian yang didanai Kemendiktisaintek, menulis 47+ artikel ilmiah di jurnal nasional dan internasional, menghasilkan 6 Hak Kekayaan Intelektual berupa software pemodelan, serta mendampingi mahasiswa sebagai asisten dosen untuk 18 mata kuliah lintas program studi di FMIPA UNM.',
+    'map.tab.air': 'Polusi Udara',
+    'map.tab.weather': 'Cuaca & Hujan',
+    'map.tab.quake': 'Gempa Bumi',
+    'map.tab.fire': 'Kebakaran Hutan',
+    'map.loading': 'Memuat data…',
+    'map.caption': 'Peta interaktif per Kota/Kabupaten · Polusi Udara & Cuaca/Hujan (Open-Meteo) · Gempa (BMKG) · Kebakaran (NASA FIRMS) · Koordinat: BIG Gazeter · Basemap: Esri Dark Gray Canvas',
+    'map.disabled.title': 'Peta dinonaktifkan di perangkat mobile',
+    'map.disabled.desc': 'Silakan buka halaman ini di desktop/tablet untuk melihat peta interaktif polusi udara, cuaca, gempa, dan titik api.',
+    'id.pill': 'A · Identitas Diri',
+    'id.title': 'Profil Singkat',
+    'id.desc': 'Data pribadi dan domisili sesuai dokumen resmi.',
+    'id.lockHint': '🔒 Data sensitif terkunci — klik untuk membuka',
+    'id.name': 'Nama Lengkap',
+    'id.job': 'Pekerjaan',
+    'id.jobValue': 'Asisten Dosen / Asisten Riset',
+    'id.nik': 'NIK 🔒',
+    'id.birth': 'Tempat & Tanggal Lahir',
+    'id.phone': 'Nomor Telepon 🔒',
+    'id.address': 'Alamat Rumah',
+    'id.addressValue': 'Kec. Mamuju, Kabupaten Mamuju, Sulawesi Barat',
+    'id.email': 'Alamat E-Mail',
+    'edu.pill': 'B · Riwayat Pendidikan',
+    'edu.title': 'Pendidikan Formal',
+    'edu.desc': 'Dua jenjang pendidikan tinggi di bidang Matematika di Universitas Negeri Makassar.',
+    'edu.field': 'Bidang Ilmu',
+    'edu.math': 'Matematika',
+    'edu.program': 'Program',
+    'edu.bachelor': 'Sarjana (S1)',
+    'edu.master': 'Magister (S2)',
+    'edu.thesis': 'Judul Skripsi',
+    'edu.thesisM': 'Judul Tesis',
+    'edu.thesis1': 'Solusi Permasalahan Kasus Sosial Kemiskinan Akibat Covid-19 Menggunakan Permodelan Matematika Pada Wilayah Kota Makassar',
+    'edu.thesis2': 'Analisis Dan Simulasi Model Matematika SE2CFS Pada Kasus Krisis Moral Generasi Z Di Wilayah Kota Makassar',
+    'edu.advisor': 'Pembimbing',
+    'cap.pill': 'C · Pengalaman',
+    'cap.title': 'Tiga Bidang Kontribusi',
+    'cap.desc': 'Riset, pengabdian masyarakat, dan pengajaran — tiga pilar kegiatan akademik.',
+    'cap.tab.research': 'Riset',
+    'cap.tab.service': 'Pengabdian',
+    'cap.tab.teaching': 'Pengajaran',
+    'cap.stat.research': 'Penelitian',
+    'cap.stat.years': 'Tahun Terakhir',
+    'cap.stat.pkm': 'Program PKM',
+    'cap.stat.prov': 'Provinsi',
+    'cap.stat.years2': 'Tahun',
+    'cap.stat.courses': 'Mata Kuliah',
+    'cap.stat.prodi': 'Program Studi',
+    'cap.stat.years3': 'Tahun Terakhir',
+    'cap.research.text': 'Sebanyak 17 penelitian dalam lima tahun terakhir, seluruhnya didanai Kemendiktisaintek. Topiknya beragam: mitigasi degradasi mangrove dan konservasi kepiting, over-eksploitasi perikanan laut, pencegahan stunting berbasis kearifan lokal, rekonsiliasi sosial polarisasi politik Gen-Z, eco-anxiety remaja pesisir, kecanduan game online, hingga penyebaran DBD lewat vektor Wolbachia akibat perubahan iklim.',
+    'cap.research.cta': 'Lihat daftar penelitian ↓',
+    'cap.service.text': 'Lima program pengabdian masyarakat di Sulawesi Barat dan Sulawesi Selatan — mulai dari optimalisasi pekarangan rumah untuk penguatan ekonomi keluarga di Desa Ralleanak Utara, Mamasa; pelatihan penulisan proposal usaha untuk Koperasi Merah Putih di Desa Lumika, Mamuju; hingga pendampingan kewirausahaan dan pemasaran digital bagi kelompok tani Matongeng-Tongeng di Kabupaten Pinrang.',
+    'cap.service.cta': 'Lihat program pengabdian ↓',
+    'cap.teaching.text': 'Asisten dosen di Universitas Negeri Makassar untuk 18 mata kuliah lintas program studi — dari Kalkulus Dasar dan Persamaan Diferensial Biasa untuk prodi Matematika dan Geografi, hingga Pemodelan Matematika dan Pemodelan Matematika & Statistik untuk mahasiswa S2 Matematika, Statistika, Pendidikan Matematika, Bahasa Indonesia, dan Bahasa Inggris.',
+    'cap.teaching.cta': 'Lihat daftar mata kuliah ↓',
+    'res.pill': 'C.1 · Penelitian',
+    'res.title': 'Pengalaman Penelitian 5 Tahun Terakhir',
+    'res.desc': '17 judul penelitian yang didanai oleh Kemendiktisaintek.',
+    'res.count': 'Penelitian',
+    'pub.pill': 'E · Artikel Ilmiah',
+    'pub.title': 'Publikasi Jurnal 5 Tahun Terakhir',
+    'pub.desc': '47+ artikel ilmiah di jurnal nasional dan internasional, termasuk jurnal bereputasi.',
+    'pub.filter.all': 'Semua',
+    'pub.citation': 'Sitasi —',
+    'srv.pill': 'D · Pengabdian Masyarakat',
+    'srv.title': 'Pengabdian Kepada Masyarakat',
+    'srv.desc': 'Lima program pengabdian dalam lima tahun terakhir di Sulawesi Barat dan Sulawesi Selatan.',
+    'hki.pill': 'H · HKI',
+    'hki.title': 'Hak Kekayaan Intelektual',
+    'hki.desc': 'Enam pencatatan Hak Cipta software pemodelan matematika, 2021–2024.',
+    'teach.pill': 'I · Pengajaran',
+    'teach.title': 'Pengalaman Mengajar 3 Tahun Terakhir',
+    'teach.desc': 'Asisten dosen di Universitas Negeri Makassar untuk 18 mata kuliah lintas program studi.',
+    'teach.no': 'No',
+    'teach.course': 'Mata Kuliah',
+    'teach.prodi': 'Program Studi',
+    'teach.role': 'Peran',
+    'teach.roleValue': 'Asisten Dosen',
+    'awd.pill': 'J · Penghargaan',
+    'awd.title': 'Penghargaan 10 Tahun Terakhir',
+    'awd.desc': 'Dari pemerintah, asosiasi, dan institusi lainnya.',
+    'awd.bestPresenter': 'Presenter Terbaik',
+    'awd.silver': 'Setara Medali Perak PKM-RSH 1 Kategori Presentasi',
+    'awd.pimnas': 'Peserta PIMNAS 34',
+    'awd.pkmsh': 'Lolos Pendanaan PKM-RSH',
+    'awd.pkmre': 'Lolos Pendanaan PKM-RE',
+    'awd.mascot': 'Juara 2 Desain Maskot KPU',
+    'awd.hipmi': 'Harapan 1 Desain Logo MUNAS HIPMI XVI',
+    'awd.unibos': 'Juara Desain Logo UNIBOS',
+    'awd.top10': '10 Besar Ujian Masuk Perguruan Tinggi',
+    'awd.posterProv': 'Juara 2 Desain Poster FLS2N Tingkat Provinsi',
+    'awd.posterKab': 'Juara Desain Poster FLS2N Tingkat Kabupaten',
+    'awd.osn': 'Harapan 1 OSN Biologi Tingkat Kabupaten',
+    'book.pill': 'G · Penulisan Buku',
+    'book.title': 'PEMODELAN MATEMATIKA: Solusi Penyebaran Covid-19 dan Pneumonia Melalui Pendekatan Berbasis Intervensi Masyarakat',
+    'book.desc': 'Buku ini membahas pemodelan matematika untuk penyebaran Covid-19 dan pneumonia dengan pendekatan intervensi masyarakat. Ditulis berdasarkan pengalaman riset penulis di Sulawesi Selatan dan diterbitkan pada tahun 2025.',
+    'act.pill': 'F · K · Seminar & Kegiatan',
+    'act.title': 'Penyampaian Makalah & Kegiatan Ilmiah',
+    'act.desc': 'Partisipasi dalam seminar, konferensi, dan kegiatan akademik lainnya.',
+    'act.role.presenter': 'Presenter',
+    'act.role.speaker': 'Pemakalah',
+    'act.role.speaker2': 'Pemateri',
+    'act.role.participant': 'Peserta',
+    'act.role.committee': 'Panitia',
+    'ct.pill': 'Kontak',
+    'ct.title': 'Terbuka untuk kolaborasi<br>riset & pengabdian',
+    'ct.desc': 'Terbuka untuk kolaborasi penelitian, penulisan artikel ilmiah, pengabdian masyarakat, dan pengajaran. Berdomisili di Mamuju, Sulawesi Barat. Respons biasanya dalam 1–2 hari kerja.',
+    'ct.email': 'Email',
+    'ct.phone': 'Telepon 🔒',
+    'ct.domicile': 'Domisili',
+    'ct.domicileValue': 'Mamuju, Sulawesi Barat',
+    'ct.sendEmail': 'Kirim Email',
+    'ct.downloadCV': 'Unduh CV (PDF)',
+    'ft.related': 'Terkait',
+    'ft.privacy': 'Privasi',
+    'pc.title': 'Data Terkunci',
+    'pc.sub': 'Masukkan kode akses untuk<br>membuka data sensitif',
+    'pc.error': 'Kode akses salah',
+    'pc.submit': 'Buka Akses',
+    'pc.hint': 'Hanya untuk keperluan verifikasi resmi'
+  },
+  en: {
+    'topbar.role': 'Lecturer Assistant & Researcher',
+    'hero.tagline': 'Mathematical modeling, numerical simulation, and data analysis for social, health, and environmental problems — from Gen Z moral crisis to mangrove conservation in Sulawesi.',
+    'hero.badge1': '17 Kemendiktisaintek Research',
+    'hero.badge2': '47+ Scientific Articles',
+    'hero.badge3': '6 Software IPRs',
+    'hero.cta': 'View Curriculum Vitae',
+    'hero.scroll': 'Scroll',
+    'nav.profil': 'Profile',
+    'nav.pendidikan': 'Education',
+    'nav.riset': 'Research',
+    'nav.publikasi': 'Publications',
+    'nav.pengabdian': 'Service',
+    'nav.pengajaran': 'Teaching',
+    'nav.penghargaan': 'Awards',
+    'nav.kontak': 'Contact',
+    'manifesto.title': 'Mathematics is not just numbers —<br>it is a way to read social problems',
+    'manifesto.text': 'Bachelor and Master of Mathematics from Universitas Negeri Makassar with a focus on mathematical modeling and numerical simulation. Over the past five years involved in 17 research projects funded by Kemendiktisaintek, authored 47+ scientific articles in national and international journals, produced 6 Intellectual Property Rights in the form of modeling software, and mentored students as a lecturer assistant for 18 courses across study programs at FMIPA UNM.',
+    'map.tab.air': 'Air Pollution',
+    'map.tab.weather': 'Weather & Rain',
+    'map.tab.quake': 'Earthquakes',
+    'map.tab.fire': 'Forest Fires',
+    'map.loading': 'Loading data…',
+    'map.caption': 'Interactive map per City/Regency · Air Pollution & Weather/Rain (Open-Meteo) · Earthquakes (BMKG) · Fires (NASA FIRMS) · Coordinates: BIG Gazeter · Basemap: Esri Dark Gray Canvas',
+    'map.disabled.title': 'Map is disabled on mobile devices',
+    'map.disabled.desc': 'Please open this page on a desktop/tablet to view the interactive map of air pollution, weather, earthquakes, and fire hotspots.',
+    'id.pill': 'A · Personal Identity',
+    'id.title': 'Short Profile',
+    'id.desc': 'Personal data and domicile per official documents.',
+    'id.lockHint': '🔒 Sensitive data locked — click to unlock',
+    'id.name': 'Full Name',
+    'id.job': 'Occupation',
+    'id.jobValue': 'Lecturer Assistant / Research Assistant',
+    'id.nik': 'National ID 🔒',
+    'id.birth': 'Place & Date of Birth',
+    'id.phone': 'Phone Number 🔒',
+    'id.address': 'Home Address',
+    'id.addressValue': 'Mamuju District, Mamuju Regency, West Sulawesi',
+    'id.email': 'Email Address',
+    'edu.pill': 'B · Education History',
+    'edu.title': 'Formal Education',
+    'edu.desc': 'Two higher education degrees in Mathematics at Universitas Negeri Makassar.',
+    'edu.field': 'Field of Study',
+    'edu.math': 'Mathematics',
+    'edu.program': 'Program',
+    'edu.bachelor': "Bachelor's (S1)",
+    'edu.master': "Master's (S2)",
+    'edu.thesis': 'Undergraduate Thesis Title',
+    'edu.thesisM': 'Master Thesis Title',
+    'edu.thesis1': 'Solutions to Social Poverty Problems Due to Covid-19 Using Mathematical Modeling in Makassar City Area',
+    'edu.thesis2': 'Analysis and Simulation of SE2CFS Mathematical Model on Gen Z Moral Crisis in Makassar City Area',
+    'edu.advisor': 'Advisors',
+    'cap.pill': 'C · Experience',
+    'cap.title': 'Three Areas of Contribution',
+    'cap.desc': 'Research, community service, and teaching — three pillars of academic activity.',
+    'cap.tab.research': 'Research',
+    'cap.tab.service': 'Service',
+    'cap.tab.teaching': 'Teaching',
+    'cap.stat.research': 'Research',
+    'cap.stat.years': 'Last 5 Years',
+    'cap.stat.pkm': 'PKM Programs',
+    'cap.stat.prov': 'Provinces',
+    'cap.stat.years2': 'Years',
+    'cap.stat.courses': 'Courses',
+    'cap.stat.prodi': 'Study Programs',
+    'cap.stat.years3': 'Last 3 Years',
+    'cap.research.text': '17 research projects in the last five years, all funded by Kemendiktisaintek. Diverse topics: mitigation of mangrove degradation and crab conservation, over-exploitation of marine fisheries, local wisdom-based stunting prevention, social reconciliation of Gen-Z political polarization, coastal youth eco-anxiety, online gaming addiction, and dengue spread through Wolbachia vectors due to climate change.',
+    'cap.research.cta': 'View research list ↓',
+    'cap.service.text': 'Five community service programs in West Sulawesi and South Sulawesi — from optimizing home yards to strengthen family economy in Ralleanak Utara Village, Mamasa; business proposal writing training for the Merah Putih Cooperative in Lumika Village, Mamuju; to entrepreneurship and digital marketing mentoring for the Matongeng-Tongeng farmer group in Pinrang Regency.',
+    'cap.service.cta': 'View service programs ↓',
+    'cap.teaching.text': 'Lecturer assistant at Universitas Negeri Makassar for 18 courses across study programs — from Basic Calculus and Ordinary Differential Equations for Mathematics and Geography programs, to Mathematical Modeling and Mathematical & Statistical Modeling for Master\'s students in Mathematics, Statistics, Mathematics Education, Indonesian, and English.',
+    'cap.teaching.cta': 'View course list ↓',
+    'res.pill': 'C.1 · Research',
+    'res.title': 'Research Experience in the Last 5 Years',
+    'res.desc': '17 research titles funded by Kemendiktisaintek.',
+    'res.count': 'Research',
+    'pub.pill': 'E · Scientific Articles',
+    'pub.title': 'Journal Publications in the Last 5 Years',
+    'pub.desc': '47+ scientific articles in national and international journals, including reputable journals.',
+    'pub.filter.all': 'All',
+    'pub.citation': 'Citations —',
+    'srv.pill': 'D · Community Service',
+    'srv.title': 'Community Service',
+    'srv.desc': 'Five service programs in the last five years in West Sulawesi and South Sulawesi.',
+    'hki.pill': 'H · IPR',
+    'hki.title': 'Intellectual Property Rights',
+    'hki.desc': 'Six Copyright registrations of mathematical modeling software, 2021–2024.',
+    'teach.pill': 'I · Teaching',
+    'teach.title': 'Teaching Experience in the Last 3 Years',
+    'teach.desc': 'Lecturer assistant at Universitas Negeri Makassar for 18 courses across study programs.',
+    'teach.no': 'No',
+    'teach.course': 'Course',
+    'teach.prodi': 'Study Program',
+    'teach.role': 'Role',
+    'teach.roleValue': 'Lecturer Assistant',
+    'awd.pill': 'J · Awards',
+    'awd.title': 'Awards in the Last 10 Years',
+    'awd.desc': 'From government, associations, and other institutions.',
+    'awd.bestPresenter': 'Best Presenter',
+    'awd.silver': 'Silver Medal Equivalent PKM-RSH 1 Presentation Category',
+    'awd.pimnas': 'PIMNAS 34 Participant',
+    'awd.pkmsh': 'PKM-RSH Funding Recipient',
+    'awd.pkmre': 'PKM-RE Funding Recipient',
+    'awd.mascot': '2nd Place KPU Mascot Design',
+    'awd.hipmi': '1st Runner-up MUNAS HIPMI XVI Logo Design',
+    'awd.unibos': 'Winner UNIBOS Logo Design',
+    'awd.top10': 'Top 10 University Entrance Exam',
+    'awd.posterProv': '2nd Place FLS2N Provincial Poster Design',
+    'awd.posterKab': 'Winner FLS2N Regency Poster Design',
+    'awd.osn': '1st Runner-up Regency Biology Olympiad',
+    'book.pill': 'G · Book Writing',
+    'book.title': 'MATHEMATICAL MODELING: Solutions for the Spread of Covid-19 and Pneumonia Through Community Intervention-Based Approaches',
+    'book.desc': 'This book discusses mathematical modeling for the spread of Covid-19 and pneumonia with a community intervention approach. Written based on the author\'s research experience in South Sulawesi and published in 2025.',
+    'act.pill': 'F · K · Seminars & Activities',
+    'act.title': 'Paper Presentations & Scientific Activities',
+    'act.desc': 'Participation in seminars, conferences, and other academic activities.',
+    'act.role.presenter': 'Presenter',
+    'act.role.speaker': 'Speaker',
+    'act.role.speaker2': 'Instructor',
+    'act.role.participant': 'Participant',
+    'act.role.committee': 'Committee',
+    'ct.pill': 'Contact',
+    'ct.title': 'Open for research<br>& service collaboration',
+    'ct.desc': 'Open for research collaboration, scientific article writing, community service, and teaching. Based in Mamuju, West Sulawesi. Response usually within 1–2 business days.',
+    'ct.email': 'Email',
+    'ct.phone': 'Phone 🔒',
+    'ct.domicile': 'Domicile',
+    'ct.domicileValue': 'Mamuju, West Sulawesi',
+    'ct.sendEmail': 'Send Email',
+    'ct.downloadCV': 'Download CV (PDF)',
+    'ft.related': 'Related',
+    'ft.privacy': 'Privacy',
+    'pc.title': 'Locked Data',
+    'pc.sub': 'Enter access code to<br>unlock sensitive data',
+    'pc.error': 'Incorrect access code',
+    'pc.submit': 'Unlock Access',
+    'pc.hint': 'For official verification purposes only'
+  },
+  ja: {
+    'topbar.role': '講師助手・研究者',
+    'hero.tagline': '社会・健康・環境問題のための数理モデリング、数値シミュレーション、データ分析 — Z世代の道徳的危機からスラウェシのマングローブ保全まで。',
+    'hero.badge1': 'ケメンディクティサインテック研究17件',
+    'hero.badge2': '学術論文47件以上',
+    'hero.badge3': 'ソフトウェア知的財産6件',
+    'hero.cta': '履歴書を見る',
+    'hero.scroll': 'スクロール',
+    'nav.profil': 'プロフィール',
+    'nav.pendidikan': '学歴',
+    'nav.riset': '研究',
+    'nav.publikasi': '出版物',
+    'nav.pengabdian': '社会貢献',
+    'nav.pengajaran': '教育',
+    'nav.penghargaan': '受賞歴',
+    'nav.kontak': 'お問い合わせ',
+    'manifesto.title': '数学は単なる数字ではない —<br>社会問題を読み解く方法である',
+    'manifesto.text': 'マカッサル国立大学で数学の学士号と修士号を取得し、数理モデリングと数値シミュレーションを専攻。過去5年間でケメンディクティサインテックの資金提供を受けた17件の研究に従事し、国内外の学術誌に47件以上の論文を執筆、モデリングソフトウェアとして6件の知的財産権を取得し、FMIPA UNMの18科目で講師助手として学生を指導。',
+    'map.tab.air': '大気汚染',
+    'map.tab.weather': '天気・雨',
+    'map.tab.quake': '地震',
+    'map.tab.fire': '森林火災',
+    'map.loading': 'データを読み込み中…',
+    'map.caption': '市/県別インタラクティブマップ · 大気汚染・天気/雨 (Open-Meteo) · 地震 (BMKG) · 火災 (NASA FIRMS) · 座標: BIG Gazeter · ベースマップ: Esri Dark Gray Canvas',
+    'map.disabled.title': 'モバイル端末では地図を無効にしています',
+    'map.disabled.desc': '大気汚染・天気・地震・火災地点のインタラクティブマップを表示するには、デスクトップ/タブレットでこのページを開いてください。',
+    'id.pill': 'A · 個人情報',
+    'id.title': '簡単なプロフィール',
+    'id.desc': '公式文書に基づく個人情報と居住地。',
+    'id.lockHint': '🔒 機密データはロックされています — クリックで解除',
+    'id.name': '氏名',
+    'id.job': '職業',
+    'id.jobValue': '講師助手 / 研究助手',
+    'id.nik': '国民ID 🔒',
+    'id.birth': '出生地・生年月日',
+    'id.phone': '電話番号 🔒',
+    'id.address': '自宅住所',
+    'id.addressValue': '西スラウェシ州マムジュ県マムジュ郡',
+    'id.email': 'メールアドレス',
+    'edu.pill': 'B · 学歴',
+    'edu.title': '正規教育',
+    'edu.desc': 'マカッサル国立大学で数学分野の2つの高等教育学位を取得。',
+    'edu.field': '専攻分野',
+    'edu.math': '数学',
+    'edu.program': 'プログラム',
+    'edu.bachelor': '学士 (S1)',
+    'edu.master': '修士 (S2)',
+    'edu.thesis': '学士論文タイトル',
+    'edu.thesisM': '修士論文タイトル',
+    'edu.thesis1': 'マカッサル市におけるCovid-19による社会的貧困問題の数理モデリングによる解決',
+    'edu.thesis2': 'マカッサル市におけるZ世代の道徳的危機に関するSE2CFS数理モデルの分析とシミュレーション',
+    'edu.advisor': '指導教員',
+    'cap.pill': 'C · 経験',
+    'cap.title': '3つの貢献分野',
+    'cap.desc': '研究、社会貢献、教育 — 学術活動の3本柱。',
+    'cap.tab.research': '研究',
+    'cap.tab.service': '社会貢献',
+    'cap.tab.teaching': '教育',
+    'cap.stat.research': '研究',
+    'cap.stat.years': '過去5年間',
+    'cap.stat.pkm': 'PKMプログラム',
+    'cap.stat.prov': '州',
+    'cap.stat.years2': '年間',
+    'cap.stat.courses': '科目',
+    'cap.stat.prodi': '専攻',
+    'cap.stat.years3': '過去3年間',
+    'cap.research.text': '過去5年間で17件の研究、すべてケメンディクティサインテックの資金提供。テーマは多様：マングローブ劣化の緩和とカニ保全、海洋漁業の過剰搾取、地域の知恵に基づく発育阻害予防、Z世代の政治的二極化の社会的和解、沿岸部の若者のエコ不安、オンラインゲーム依存症、気候変動によるウォルバキア媒介のデング熱拡散など。',
+    'cap.research.cta': '研究リストを見る ↓',
+    'cap.service.text': '西スラウェシ州と南スラウェシ州での5つの社会貢献プログラム — ママサのラレアナク・ウタラ村での家庭経済強化のための庭の最適化から、マムジュのルミカ村でのメラ・プティ協同組合の事業提案書作成トレーニング、ピンラン県のマトンゲン・トンゲン農民グループへの起業とデジタルマーケティングのメンタリングまで。',
+    'cap.service.cta': '社会貢献プログラムを見る ↓',
+    'cap.teaching.text': 'マカッサル国立大学で18科目の講師助手 — 数学科と地理学科の基礎微積分と常微分方程式から、数学・統計学・数学教育・インドネシア語・英語の修士課程学生向けの数理モデリングと数理・統計モデリングまで。',
+    'cap.teaching.cta': '科目リストを見る ↓',
+    'res.pill': 'C.1 · 研究',
+    'res.title': '過去5年間の研究経験',
+    'res.desc': 'ケメンディクティサインテックの資金提供を受けた17件の研究。',
+    'res.count': '研究',
+    'pub.pill': 'E · 学術論文',
+    'pub.title': '過去5年間のジャーナル出版物',
+    'pub.desc': '国内外の学術誌に47件以上の論文、著名なジャーナルを含む。',
+    'pub.filter.all': 'すべて',
+    'pub.citation': '被引用 —',
+    'srv.pill': 'D · 社会貢献',
+    'srv.title': '社会貢献活動',
+    'srv.desc': '過去5年間の西スラウェシ州と南スラウェシ州での5つのプログラム。',
+    'hki.pill': 'H · 知的財産',
+    'hki.title': '知的財産権',
+    'hki.desc': '数理モデリングソフトウェアの著作権登録6件、2021〜2024年。',
+    'teach.pill': 'I · 教育',
+    'teach.title': '過去3年間の教育経験',
+    'teach.desc': 'マカッサル国立大学で18科目の講師助手。',
+    'teach.no': 'No',
+    'teach.course': '科目',
+    'teach.prodi': '専攻',
+    'teach.role': '役割',
+    'teach.roleValue': '講師助手',
+    'awd.pill': 'J · 受賞歴',
+    'awd.title': '過去10年間の受賞歴',
+    'awd.desc': '政府、協会、その他の機関から。',
+    'awd.bestPresenter': '最優秀発表者',
+    'awd.silver': 'PKM-RSH 1 発表部門 銀メダル相当',
+    'awd.pimnas': 'PIMNAS 34 参加者',
+    'awd.pkmsh': 'PKM-RSH 資金獲得',
+    'awd.pkmre': 'PKM-RE 資金獲得',
+    'awd.mascot': 'KPUマスコットデザイン2位',
+    'awd.hipmi': 'MUNAS HIPMI XVI ロゴデザイン準優勝',
+    'awd.unibos': 'UNIBOSロゴデザイン優勝',
+    'awd.top10': '大学入学試験トップ10',
+    'awd.posterProv': 'FLS2N州ポスターデザイン2位',
+    'awd.posterKab': 'FLS2N県ポスターデザイン優勝',
+    'awd.osn': '県生物オリンピック準優勝',
+    'book.pill': 'G · 書籍執筆',
+    'book.title': '数理モデリング: 地域介入アプローチによるCovid-19と肺炎拡散の解決策',
+    'book.desc': '本書は地域介入アプローチを用いたCovid-19と肺炎の拡散に関する数理モデリングを論じています。南スラウェシでの著者の研究経験に基づいて執筆され、2025年に出版されました。',
+    'act.pill': 'F · K · セミナー・活動',
+    'act.title': '論文発表・学術活動',
+    'act.desc': 'セミナー、会議、その他の学術活動への参加。',
+    'act.role.presenter': '発表者',
+    'act.role.speaker': '講演者',
+    'act.role.speaker2': '講師',
+    'act.role.participant': '参加者',
+    'act.role.committee': '委員',
+    'ct.pill': 'お問い合わせ',
+    'ct.title': '研究・社会貢献の<br>協業を受け付けています',
+    'ct.desc': '研究協力、学術論文執筆、社会貢献、教育に関する協業を受け付けています。西スラウェシ州マムジュ在住。通常1〜2営業日以内に返信します。',
+    'ct.email': 'メール',
+    'ct.phone': '電話 🔒',
+    'ct.domicile': '居住地',
+    'ct.domicileValue': '西スラウェシ州マムジュ',
+    'ct.sendEmail': 'メールを送信',
+    'ct.downloadCV': 'CVをダウンロード (PDF)',
+    'ft.related': '関連',
+    'ft.privacy': 'プライバシー',
+    'pc.title': 'ロックされたデータ',
+    'pc.sub': '機密データを解除するには<br>アクセスコードを入力してください',
+    'pc.error': 'アクセスコードが正しくありません',
+    'pc.submit': 'アクセス解除',
+    'pc.hint': '公式認証目的のみ'
+  },
+  zh: {
+    'topbar.role': '讲师助理与研究员',
+    'hero.tagline': '面向社会、健康与环境问题的数学建模、数值模拟和数据分析 — 从Z世代道德危机到苏拉威西红树林保护。',
+    'hero.badge1': '17项Kemendiktisaintek研究',
+    'hero.badge2': '47+篇科学论文',
+    'hero.badge3': '6项软件知识产权',
+    'hero.cta': '查看简历',
+    'hero.scroll': '滚动',
+    'nav.profil': '简介',
+    'nav.pendidikan': '教育',
+    'nav.riset': '研究',
+    'nav.publikasi': '出版物',
+    'nav.pengabdian': '社会服务',
+    'nav.pengajaran': '教学',
+    'nav.penghargaan': '荣誉',
+    'nav.kontak': '联系方式',
+    'manifesto.title': '数学不仅仅是数字 —<br>它是解读社会问题的方式',
+    'manifesto.text': '望加锡国立大学数学学士和硕士，专注于数学建模和数值模拟。过去五年参与17项由Kemendiktisaintek资助的研究，在国内和国际期刊发表47+篇科学论文，获得6项建模软件形式的知识产权，并作为讲师助理在FMIPA UNM指导18门跨专业课程的学生。',
+    'map.tab.air': '空气污染',
+    'map.tab.weather': '天气与降雨',
+    'map.tab.quake': '地震',
+    'map.tab.fire': '森林火灾',
+    'map.loading': '正在加载数据…',
+    'map.caption': '按城市/县交互式地图 · 空气污染与天气/降雨 (Open-Meteo) · 地震 (BMKG) · 火灾 (NASA FIRMS) · 坐标: BIG Gazeter · 底图: Esri Dark Gray Canvas',
+    'map.disabled.title': '移动设备上已禁用地图',
+    'map.disabled.desc': '请在桌面/平板电脑上打开此页面以查看空气污染、天气、地震和火点的交互式地图。',
+    'id.pill': 'A · 个人身份',
+    'id.title': '简短简介',
+    'id.desc': '根据官方文件的个人数据和居住地。',
+    'id.lockHint': '🔒 敏感数据已锁定 — 点击解锁',
+    'id.name': '姓名',
+    'id.job': '职业',
+    'id.jobValue': '讲师助理 / 研究助理',
+    'id.nik': '身份证号 🔒',
+    'id.birth': '出生地与出生日期',
+    'id.phone': '电话号码 🔒',
+    'id.address': '家庭住址',
+    'id.addressValue': '西苏拉威西省马穆朱县马穆朱区',
+    'id.email': '电子邮件',
+    'edu.pill': 'B · 教育经历',
+    'edu.title': '正规教育',
+    'edu.desc': '望加锡国立大学数学领域的两个高等教育学位。',
+    'edu.field': '专业领域',
+    'edu.math': '数学',
+    'edu.program': '课程',
+    'edu.bachelor': '学士 (S1)',
+    'edu.master': '硕士 (S2)',
+    'edu.thesis': '本科论文题目',
+    'edu.thesisM': '硕士论文题目',
+    'edu.thesis1': '望加锡市Covid-19导致的社会贫困问题的数学建模解决方案',
+    'edu.thesis2': '望加锡市Z世代道德危机SE2CFS数学模型的分析与仿真',
+    'edu.advisor': '导师',
+    'cap.pill': 'C · 经验',
+    'cap.title': '三个贡献领域',
+    'cap.desc': '研究、社会服务和教学 — 学术活动的三大支柱。',
+    'cap.tab.research': '研究',
+    'cap.tab.service': '社会服务',
+    'cap.tab.teaching': '教学',
+    'cap.stat.research': '研究',
+    'cap.stat.years': '过去5年',
+    'cap.stat.pkm': 'PKM项目',
+    'cap.stat.prov': '省份',
+    'cap.stat.years2': '年',
+    'cap.stat.courses': '课程',
+    'cap.stat.prodi': '专业',
+    'cap.stat.years3': '过去3年',
+    'cap.research.text': '过去五年共17项研究，全部由Kemendiktisaintek资助。主题多样：红树林退化缓解和螃蟹保护、海洋渔业过度捕捞、基于当地智慧的发育迟缓预防、Z世代政治两极化的社会和解、沿海青年生态焦虑、网络游戏成瘾以及气候变化导致的沃尔巴克氏体媒介登革热传播。',
+    'cap.research.cta': '查看研究列表 ↓',
+    'cap.service.text': '西苏拉威西和南苏拉威西的五个社会服务项目 — 从马马萨Ralleanak Utara村优化庭院以增强家庭经济，到马穆朱Lumika村Merah Putih合作社的商业提案撰写培训，再到Pinrang县Matongeng-Tongeng农民群体的创业和数字营销指导。',
+    'cap.service.cta': '查看社会服务项目 ↓',
+    'cap.teaching.text': '望加锡国立大学18门课程的讲师助理 — 从数学和地理专业的基础微积分和常微分方程，到数学、统计学、数学教育、印尼语和英语硕士研究生的数学建模与数学统计建模。',
+    'cap.teaching.cta': '查看课程列表 ↓',
+    'res.pill': 'C.1 · 研究',
+    'res.title': '过去5年研究经历',
+    'res.desc': '17项由Kemendiktisaintek资助的研究。',
+    'res.count': '研究',
+    'pub.pill': 'E · 科学论文',
+    'pub.title': '过去5年期刊发表',
+    'pub.desc': '47+篇国内和国际期刊科学论文，包括知名期刊。',
+    'pub.filter.all': '全部',
+    'pub.citation': '引用 —',
+    'srv.pill': 'D · 社会服务',
+    'srv.title': '社区服务',
+    'srv.desc': '过去五年在西苏拉威西和南苏拉威西的五个服务项目。',
+    'hki.pill': 'H · 知识产权',
+    'hki.title': '知识产权',
+    'hki.desc': '六项数学建模软件著作权登记，2021–2024。',
+    'teach.pill': 'I · 教学',
+    'teach.title': '过去3年教学经历',
+    'teach.desc': '望加锡国立大学18门课程的讲师助理。',
+    'teach.no': '序号',
+    'teach.course': '课程',
+    'teach.prodi': '专业',
+    'teach.role': '角色',
+    'teach.roleValue': '讲师助理',
+    'awd.pill': 'J · 荣誉',
+    'awd.title': '过去10年荣誉',
+    'awd.desc': '来自政府、协会和其他机构。',
+    'awd.bestPresenter': '最佳演讲者',
+    'awd.silver': 'PKM-RSH 1 演讲类银牌同等',
+    'awd.pimnas': 'PIMNAS 34 参与者',
+    'awd.pkmsh': 'PKM-RSH 资助获得者',
+    'awd.pkmre': 'PKM-RE 资助获得者',
+    'awd.mascot': 'KPU吉祥物设计第二名',
+    'awd.hipmi': 'MUNAS HIPMI XVI 标志设计亚军',
+    'awd.unibos': 'UNIBOS标志设计冠军',
+    'awd.top10': '大学入学考试前10名',
+    'awd.posterProv': 'FLS2N省级海报设计第二名',
+    'awd.posterKab': 'FLS2N县级海报设计冠军',
+    'awd.osn': '县级生物奥林匹克亚军',
+    'book.pill': 'G · 书籍写作',
+    'book.title': '数学建模：基于社区干预方法的Covid-19和肺炎传播解决方案',
+    'book.desc': '本书讨论了采用社区干预方法的Covid-19和肺炎传播的数学建模。基于作者在南苏拉威西的研究经验撰写，于2025年出版。',
+    'act.pill': 'F · K · 研讨会与活动',
+    'act.title': '论文发表与科学活动',
+    'act.desc': '参加研讨会、会议和其他学术活动。',
+    'act.role.presenter': '演讲者',
+    'act.role.speaker': '报告人',
+    'act.role.speaker2': '讲师',
+    'act.role.participant': '参与者',
+    'act.role.committee': '委员会',
+    'ct.pill': '联系方式',
+    'ct.title': '开放研究<br>与服务合作',
+    'ct.desc': '开放研究合作、科学论文写作、社区服务和教学。居住于西苏拉威西马穆朱。通常在1–2个工作日内回复。',
+    'ct.email': '电子邮件',
+    'ct.phone': '电话 🔒',
+    'ct.domicile': '居住地',
+    'ct.domicileValue': '西苏拉威西马穆朱',
+    'ct.sendEmail': '发送电子邮件',
+    'ct.downloadCV': '下载简历 (PDF)',
+    'ft.related': '相关',
+    'ft.privacy': '隐私',
+    'pc.title': '锁定数据',
+    'pc.sub': '输入访问代码以<br>解锁敏感数据',
+    'pc.error': '访问代码错误',
+    'pc.submit': '解锁访问',
+    'pc.hint': '仅供官方验证使用'
   }
-});
+};
 
-var weatherCluster = L.markerClusterGroup({
-  maxClusterRadius: 60,
-  disableClusteringAtZoom: 9,
-  spiderfyOnMaxZoom: true,
-  showCoverageOnHover: false,
-  zoomToBoundsOnClick: true,
-  iconCreateFunction: function(cluster){
-    var count = cluster.getChildCount();
-    return L.divIcon({
-      html: '<div style="background:rgba(10,10,10,.85);border:2px solid #4fc3f7;color:#4fc3f7;' +
-            'border-radius:50%;width:36px;height:36px;display:grid;place-items:center;' +
-            'font-family:var(--px);font-size:9px;box-shadow:0 0 16px rgba(79,195,247,.4);' +
-            'backdrop-filter:blur(6px);">' + count + '</div>',
-      className: 'custom-cluster',
-      iconSize: [36, 36],
-      iconAnchor: [18, 18]
-    });
-  }
-});
+var currentLang = 'id';
 
-var gempaLayer = L.layerGroup();
-var fireLayer = L.layerGroup();
+function applyLang(lang){
+  if (!I18N[lang]) lang = 'id';
+  currentLang = lang;
 
-/* ---------- Marker Rumah ---------- */
-var HOME_LAT = -2.681803;
-var HOME_LON = 118.859484;
-
-var homeIcon = L.divIcon({
-  className: 'home-marker',
-  html: '<div class="home-marker-pulse"></div>' +
-        '<div class="home-marker-inner">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2.2" ' +
-               'stroke-linecap="round" stroke-linejoin="round">' +
-            '<path d="M3 10.5L12 3l9 7.5"/>' +
-            '<path d="M5 10v10h14V10"/>' +
-            '<path d="M10 20v-6h4v6"/>' +
-          '</svg>' +
-        '</div>',
-  iconSize: [38, 38],
-  iconAnchor: [19, 19],
-  popupAnchor: [0, -22]
-});
-
-var homeMarker = L.marker([HOME_LAT, HOME_LON], {
-  icon: homeIcon,
-  zIndexOffset: 1000
-}).addTo(map);
-
-homeMarker.bindTooltip('Rumah — Mamuju', {
-  direction: 'top',
-  offset: [0, -22],
-  className: 'home-tooltip'
-});
-
-homeMarker.bindPopup(
-  '<span class="home-popup-title">◆ Alamat Rumah</span>' +
-  '<span class="home-popup-value">Kec. Mamuju<br>Kabupaten Mamuju, Sulawesi Barat</span>' +
-  '<span class="home-popup-label">Lat: ' + HOME_LAT.toFixed(6) + ' · Lon: ' + HOME_LON.toFixed(6) + '</span>'
-);
-
-/* ============================================================ */
-function fmt(v){ return (v !== null && v !== undefined && !isNaN(v)) ? Number(v).toFixed(1) : '—'; }
-
-/* ============================================================
-   TAB 1 — POLUSI UDARA
-   ============================================================ */
-function getAQIColor(aqi){
-  if (aqi <= 50)  return '#00e400';
-  if (aqi <= 100) return '#ffff00';
-  if (aqi <= 150) return '#ff7e00';
-  if (aqi <= 200) return '#ff0000';
-  if (aqi <= 300) return '#8f3f97';
-  return '#7e0023';
-}
-function getAQILabel(aqi){
-  if (aqi <= 50)  return 'Baik';
-  if (aqi <= 100) return 'Sedang';
-  if (aqi <= 150) return 'Tidak Sehat (Sensitif)';
-  if (aqi <= 200) return 'Tidak Sehat';
-  if (aqi <= 300) return 'Sangat Tidak Sehat';
-  return 'Berbahaya';
-}
-
-function fetchCityAQI(city){
-  var url = 'https://air-quality-api.open-meteo.com/v1/air-quality' +
-            '?latitude=' + city.lat +
-            '&longitude=' + city.lon +
-            '&current=us_aqi,pm2_5,pm10,ozone,nitrogen_dioxide,sulphur_dioxide,carbon_monoxide' +
-            '&timezone=Asia%2FMakassar';
-
-  fetch(url)
-    .then(function(r){
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    })
-    .then(function(data){
-      if (data.current && data.current.us_aqi !== undefined){
-        addStationMarker(city,
-          Math.round(data.current.us_aqi),
-          data.current.pm2_5, data.current.pm10,
-          data.current.ozone, data.current.nitrogen_dioxide,
-          data.current.sulphur_dioxide, data.current.carbon_monoxide);
-      } else {
-        addStationMarker(city, null, null, null, null, null, null, null);
-      }
-    })
-    .catch(function(err){
-      console.warn('AQI gagal untuk ' + city.name + ':', err);
-      addStationMarker(city, null, null, null, null, null, null, null);
-    });
-}
-
-function addStationMarker(city, aqi, pm25, pm10, o3, no2, so2, co){
-  var markerColor = aqi !== null ? getAQIColor(aqi) : '#9aa0a6';
-  var label = aqi !== null ? getAQILabel(aqi) : 'Data tidak tersedia';
-  var size = aqi !== null ? (12 + Math.min(aqi, 250) / 250 * 14) : 10;
-
-  var customIcon = L.divIcon({
-    className: 'aqi-marker',
-    html: '<div style="' +
-          'width:' + size + 'px;height:' + size + 'px;' +
-          'background:' + markerColor + ';' +
-          'border:2px solid rgba(255,255,255,0.85);' +
-          'border-radius:50%;' +
-          'box-shadow:0 0 12px ' + markerColor + ',0 0 24px ' + markerColor + '44;' +
-          '"></div>',
-    iconSize: [size, size],
-    iconAnchor: [size/2, size/2],
-    popupAnchor: [0, -size/2 - 4]
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key = el.getAttribute('data-i18n');
+    if (I18N[lang][key] !== undefined) el.textContent = I18N[lang][key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    var key = el.getAttribute('data-i18n-html');
+    if (I18N[lang][key] !== undefined) el.innerHTML = I18N[lang][key];
   });
 
-  var popup = '<span class="aqi-popup-title">' + city.name + '</span>' +
-              '<span class="aqi-popup-label" style="margin-bottom:6px;display:block;">' +
-              city.provinsi + '</span>';
-  if (aqi !== null){
-    popup += '<span class="aqi-popup-value">' + aqi + '</span>' +
-             '<span class="aqi-popup-label">US AQI — ' + label + '</span><br><br>' +
-             '<span class="aqi-popup-label">PM2.5: ' + fmt(pm25) + ' µg/m³</span><br>' +
-             '<span class="aqi-popup-label">PM10: ' + fmt(pm10) + ' µg/m³</span><br>' +
-             '<span class="aqi-popup-label">O₃: ' + fmt(o3) + ' µg/m³</span><br>' +
-             '<span class="aqi-popup-label">NO₂: ' + fmt(no2) + ' µg/m³</span><br>' +
-             '<span class="aqi-popup-label">SO₂: ' + fmt(so2) + ' µg/m³</span><br>' +
-             '<span class="aqi-popup-label">CO: ' + fmt(co) + ' µg/m³</span>';
-  } else {
-    popup += '<span class="aqi-popup-value">—</span>' +
-             '<span class="aqi-popup-label">Data tidak tersedia</span>';
-  }
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('is-active', b.dataset.lang === lang);
+  });
 
-  var marker = L.marker([city.lat, city.lon], { icon: customIcon })
-    .bindPopup(popup);
-  marker.bindTooltip(city.name + (aqi !== null ? ' · AQI ' + aqi : ''),
-    { direction: 'top', offset: [0, -10], className: 'aqi-tooltip' });
-  aqiCluster.addLayer(marker);
+  var htmlLang = lang === 'zh' ? 'zh-CN' : (lang === 'ja' ? 'ja' : lang);
+  document.documentElement.lang = htmlLang;
+
+  try { localStorage.setItem('cv-lang', lang); } catch(e){}
 }
 
-function loadAllAQI(citiesArr, onComplete){
-  var i = 0;
-  function next(){
-    if (i >= citiesArr.length){
-      if (onComplete) onComplete();
-      return;
+document.querySelectorAll('.lang-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){ applyLang(btn.dataset.lang); });
+});
+
+/* Init language from storage */
+try {
+  var savedLang = localStorage.getItem('cv-lang');
+  if (savedLang && I18N[savedLang]) applyLang(savedLang);
+} catch(e){}
+
+/* ============================================================
+   PETA INTERAKTIF (dinonaktifkan di perangkat mobile)
+   ============================================================ */
+(function(){
+  var MAP_DISABLED = window.matchMedia('(max-width: 900px)').matches
+                     || (('ontouchstart' in window) && window.innerWidth < 1024 && window.innerHeight > window.innerWidth);
+
+  if (MAP_DISABLED){
+    var frame = document.querySelector('.media-frame');
+    if (frame){
+      frame.innerHTML =
+        '<div class="map-disabled-msg">' +
+          '<div class="mdm-icon">' +
+            '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+              '<rect x="3" y="3" width="18" height="18" rx="2"/>' +
+              '<path d="M3 9h18M9 21V9"/>' +
+            '</svg>' +
+          '</div>' +
+          '<div class="mdm-title" data-i18n="map.disabled.title">Peta dinonaktifkan di perangkat mobile</div>' +
+          '<div class="mdm-desc" data-i18n="map.disabled.desc">Silakan buka halaman ini di desktop/tablet untuk melihat peta interaktif polusi udara, cuaca, gempa, dan titik api.</div>' +
+        '</div>';
+      // Re-apply current lang for the placeholder
+      applyLang(currentLang);
     }
-    fetchCityAQI(citiesArr[i]);
-    i++;
-    setTimeout(next, 150);
+    return;
   }
-  next();
-}
 
-/* ============================================================
-   TAB 2 — CUACA & HUJAN
-   ============================================================ */
-function getTempColor(t){
-  if (t === null || t === undefined) return '#9aa0a6';
-  if (t >= 35) return '#d32f2f';
-  if (t >= 32) return '#ff5252';
-  if (t >= 28) return '#ff8c42';
-  if (t >= 24) return '#ffd93d';
-  if (t >= 20) return '#6bcb77';
-  if (t >= 15) return '#4fc3f7';
-  return '#42a5f5';
-}
-function getRainColor(mm){
-  if (mm === null || mm === undefined || mm < 0.1) return '#6bcb77';
-  if (mm < 1)   return '#7ce7ff';
-  if (mm < 5)   return '#4fc3f7';
-  if (mm < 20)  return '#2196f3';
-  if (mm < 50)  return '#1565c0';
-  return '#0d47a1';
-}
-function getRainLabel(mm){
-  if (mm === null || mm === undefined) return '—';
-  if (mm < 0.1)  return 'Kering';
-  if (mm < 1)    return 'Gerimis';
-  if (mm < 5)    return 'Hujan Ringan';
-  if (mm < 20)   return 'Hujan Sedang';
-  if (mm < 50)   return 'Hujan Lebat';
-  return 'Hujan Sangat Lebat';
-}
+  var FIRMS_MAP_KEY = 'c6a4b324efbcdc1a20c6ed7c447803b3';
 
-function fetchCityWeather(city){
-  var url = 'https://api.open-meteo.com/v1/forecast' +
-            '?latitude=' + city.lat +
-            '&longitude=' + city.lon +
-            '&current=temperature_2m,relative_humidity_2m,precipitation,rain,showers,weather_code,wind_speed_10m,wind_direction_10m' +
-            '&timezone=Asia%2FMakassar';
-
-  fetch(url)
-    .then(function(r){
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    })
-    .then(function(data){
-      if (!data.current) return;
-      addWeatherMarker(city, data.current);
-    })
-    .catch(function(err){
-      console.warn('Cuaca gagal untuk ' + city.name + ':', err);
-    });
-}
-
-function addWeatherMarker(city, cur){
-  var temp  = cur.temperature_2m;
-  var hum   = cur.relative_humidity_2m;
-  var rain  = cur.precipitation;
-  var wind  = cur.wind_speed_10m;
-  var code  = cur.weather_code;
-
-  var size = 12 + Math.min(Math.max((rain || 0) * 1.5, 0), 14);
-  var color = getRainColor(rain);
-  var tempColor = getTempColor(temp);
-
-  var customIcon = L.divIcon({
-    className: 'weather-marker',
-    html: '<div style="' +
-          'width:' + size + 'px;height:' + size + 'px;' +
-          'background:' + color + ';' +
-          'border:2px solid ' + tempColor + ';' +
-          'border-radius:50%;' +
-          'box-shadow:0 0 10px ' + color + ',0 0 20px ' + color + '44;' +
-          '"></div>',
-    iconSize: [size, size],
-    iconAnchor: [size/2, size/2],
-    popupAnchor: [0, -size/2 - 4]
+  var map = L.map('aqi-map', {
+    center: [-2.5, 118.0],
+    zoom: 5,
+    zoomControl: true,
+    attributionControl: true,
+    zoomAnimation: true,
+    fadeAnimation: true,
+    markerZoomAnimation: true
   });
 
-  var marker = L.marker([city.lat, city.lon], { icon: customIcon });
+  L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Basemap &copy; <a href="https://www.esri.com/">Esri</a>',
+    maxZoom: 16, minZoom: 0
+  }).addTo(map);
 
-  var rainBadge = (rain !== null && rain !== undefined && rain >= 0.1)
-    ? '<span class="wx-rain-badge">🌧 ' + getRainLabel(rain) + '</span>'
-    : '';
+  L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 16, opacity: 0.9
+  }).addTo(map);
 
-  var popup =
-    '<span class="wx-popup-title">◆ Cuaca Live</span>' +
-    '<span class="wx-popup-label" style="margin-bottom:6px;display:block;">' +
-    city.name + ' · ' + city.provinsi + '</span>' +
-    '<span class="wx-popup-temp">' + fmt(temp) + '°C</span>' +
-    '<span class="wx-popup-label">' + (code !== undefined ? 'Kode cuaca: ' + code : '') + '</span>' +
-    '<br><br>' +
-    '<div class="wx-popup-row"><span class="k">Hujan</span><span class="v">' + fmt(rain) + ' mm</span></div>' +
-    '<div class="wx-popup-row"><span class="k">Kelembaban</span><span class="v">' + fmt(hum) + ' %</span></div>' +
-    '<div class="wx-popup-row"><span class="k">Angin</span><span class="v">' + fmt(wind) + ' km/h</span></div>' +
-    '<div class="wx-popup-row"><span class="k">Arah Angin</span><span class="v">' + fmt(cur.wind_direction_10m) + '°</span></div>' +
-    rainBadge;
-
-  marker.bindPopup(popup);
-  marker.bindTooltip(city.name + ' · ' + fmt(temp) + '°C · ' + fmt(rain) + ' mm',
-    { direction: 'top', offset: [0, -10], className: 'weather-tooltip' });
-
-  weatherCluster.addLayer(marker);
-}
-
-function loadAllWeather(citiesArr, onComplete){
-  var i = 0;
-  function next(){
-    if (i >= citiesArr.length){
-      if (onComplete) onComplete();
-      return;
-    }
-    fetchCityWeather(citiesArr[i]);
-    i++;
-    setTimeout(next, 150);
-  }
-  next();
-}
-
-/* ============================================================
-   TAB 3 — GEMPA BUMI (BMKG)
-   ============================================================ */
-function getEqColor(mag){
-  if (mag >= 7.0) return '#ff3d3d';
-  if (mag >= 6.0) return '#ff8c42';
-  if (mag >= 5.0) return '#ffd93d';
-  if (mag >= 4.0) return '#6bcb77';
-  return '#7ce7ff';
-}
-function getEqLabel(mag){
-  if (mag >= 7.0) return 'Besar';
-  if (mag >= 6.0) return 'Kuat';
-  if (mag >= 5.0) return 'Sedang';
-  if (mag >= 4.0) return 'Ringan';
-  return 'Mikro';
-}
-function getEqRadius(mag){
-  return Math.max(8, Math.min(28, mag * 4));
-}
-function parseEqCoord(gempa){
-  var raw = gempa.Coordinates || '';
-  var parts = raw.split(',');
-  if (parts.length !== 2) return null;
-  var lat = parseFloat(parts[0]);
-  var lon = parseFloat(parts[1]);
-  if (isNaN(lat) || isNaN(lon)) return null;
-  return [lat, lon];
-}
-function addGempaMarker(gempa){
-  var coord = parseEqCoord(gempa);
-  if (!coord) return;
-
-  var mag = parseFloat(gempa.Magnitude) || 0;
-  var color = getEqColor(mag);
-  var radius = getEqRadius(mag);
-  var label = getEqLabel(mag);
-  var tsunami = gempa.Potensi && gempa.Potensi.toLowerCase().indexOf('tsunami') !== -1;
-
-  var circle = L.circleMarker(coord, {
-    radius: radius,
-    fillColor: color,
-    color: '#ffffff',
-    weight: 1.5,
-    opacity: 0.9,
-    fillOpacity: 0.55
-  });
-
-  var popup = '<span class="eq-popup-title">◆ Gempa Bumi</span>' +
-              '<span class="eq-popup-mag">M ' + mag.toFixed(1) + '</span>' +
-              '<span class="eq-popup-label">' + label + ' · ' + (gempa.Kedalaman || '—') + '</span>' +
-              '<br><br>' +
-              '<div class="eq-popup-row"><span class="k">Waktu</span><span class="v">' +
-                (gempa.Tanggal || '—') + ' ' + (gempa.Jam || '') + '</span></div>' +
-              '<div class="eq-popup-row"><span class="k">Lokasi</span><span class="v" style="font-size:11px">' +
-                (gempa.Wilayah || '—') + '</span></div>' +
-              '<div class="eq-popup-row"><span class="k">Koordinat</span><span class="v" style="font-size:11px">' +
-                coord[0].toFixed(2) + ', ' + coord[1].toFixed(2) + '</span></div>';
-
-  if (gempa.Dirasakan){
-    popup += '<div class="eq-popup-row"><span class="k">Dirasakan</span><span class="v" style="font-size:11px">' +
-             gempa.Dirasakan + '</span></div>';
-  }
-  if (tsunami){
-    popup += '<span class="eq-tsunami">⚠ Potensi Tsunami</span>';
-  }
-
-  circle.bindPopup(popup);
-  circle.bindTooltip('M ' + mag.toFixed(1) + ' · ' + (gempa.Wilayah || '').substring(0, 40),
-    { direction: 'top', offset: [0, -8], className: 'eq-tooltip' });
-
-  gempaLayer.addLayer(circle);
-}
-
-function fetchGempaData(){
-  var endpoints = [
-    'https://data.bmkg.go.id/DataMKG/TEWS/gempadirasakan.json',
-    'https://data.bmkg.go.id/DataMKG/TEWS/gempaterkini.json'
+  var cities = [
+    { name: 'Banda Aceh', provinsi: 'Aceh', lat: 5.5483, lon: 95.3238 },
+    { name: 'Medan', provinsi: 'Sumatera Utara', lat: 3.5952, lon: 98.6722 },
+    { name: 'Binjai', provinsi: 'Sumatera Utara', lat: 3.6003, lon: 98.4853 },
+    { name: 'Padang', provinsi: 'Sumatera Barat', lat: -0.9471, lon: 100.4172 },
+    { name: 'Pekanbaru', provinsi: 'Riau', lat: 0.5071, lon: 101.4478 },
+    { name: 'Batam', provinsi: 'Kepulauan Riau', lat: 1.0863, lon: 104.0348 },
+    { name: 'Jambi', provinsi: 'Jambi', lat: -1.6101, lon: 103.6131 },
+    { name: 'Palembang', provinsi: 'Sumatera Selatan', lat: -2.9761, lon: 104.7754 },
+    { name: 'Bengkulu', provinsi: 'Bengkulu', lat: -3.8004, lon: 102.2655 },
+    { name: 'Bandar Lampung', provinsi: 'Lampung', lat: -5.3971, lon: 105.2663 },
+    { name: 'Pangkal Pinang', provinsi: 'Kepulauan Bangka Belitung', lat: -2.1316, lon: 106.1169 },
+    { name: 'Tanjungpinang', provinsi: 'Kepulauan Riau', lat: 0.9186, lon: 104.4665 },
+    { name: 'Jakarta Pusat', provinsi: 'DKI Jakarta', lat: -6.1805, lon: 106.8284 },
+    { name: 'Jakarta Selatan', provinsi: 'DKI Jakarta', lat: -6.2615, lon: 106.8106 },
+    { name: 'Bekasi', provinsi: 'Jawa Barat', lat: -6.2383, lon: 106.9756 },
+    { name: 'Depok', provinsi: 'Jawa Barat', lat: -6.4025, lon: 106.7942 },
+    { name: 'Bogor', provinsi: 'Jawa Barat', lat: -6.5971, lon: 106.8060 },
+    { name: 'Bandung', provinsi: 'Jawa Barat', lat: -6.9175, lon: 107.6191 },
+    { name: 'Cirebon', provinsi: 'Jawa Barat', lat: -6.7320, lon: 108.5523 },
+    { name: 'Semarang', provinsi: 'Jawa Tengah', lat: -6.9667, lon: 110.4167 },
+    { name: 'Surakarta', provinsi: 'Jawa Tengah', lat: -7.5755, lon: 110.8243 },
+    { name: 'Magelang', provinsi: 'Jawa Tengah', lat: -7.4698, lon: 110.2177 },
+    { name: 'Yogyakarta', provinsi: 'DI Yogyakarta', lat: -7.7956, lon: 110.3695 },
+    { name: 'Surabaya', provinsi: 'Jawa Timur', lat: -7.2575, lon: 112.7521 },
+    { name: 'Malang', provinsi: 'Jawa Timur', lat: -7.9666, lon: 112.6326 },
+    { name: 'Kediri', provinsi: 'Jawa Timur', lat: -7.8480, lon: 112.0178 },
+    { name: 'Jember', provinsi: 'Jawa Timur', lat: -8.1845, lon: 113.6681 },
+    { name: 'Banyuwangi', provinsi: 'Jawa Timur', lat: -8.2192, lon: 114.3691 },
+    { name: 'Serang', provinsi: 'Banten', lat: -6.1104, lon: 106.1497 },
+    { name: 'Tangerang', provinsi: 'Banten', lat: -6.1783, lon: 106.6319 },
+    { name: 'Denpasar', provinsi: 'Bali', lat: -8.6705, lon: 115.2126 },
+    { name: 'Mataram', provinsi: 'Nusa Tenggara Barat', lat: -8.5833, lon: 116.1167 },
+    { name: 'Kupang', provinsi: 'Nusa Tenggara Timur', lat: -10.1772, lon: 123.6070 },
+    { name: 'Pontianak', provinsi: 'Kalimantan Barat', lat: -0.0263, lon: 109.3425 },
+    { name: 'Palangka Raya', provinsi: 'Kalimantan Tengah', lat: -2.2080, lon: 113.9163 },
+    { name: 'Banjarmasin', provinsi: 'Kalimantan Selatan', lat: -3.3186, lon: 114.5944 },
+    { name: 'Samarinda', provinsi: 'Kalimantan Timur', lat: -0.5022, lon: 117.1536 },
+    { name: 'Balikpapan', provinsi: 'Kalimantan Timur', lat: -1.2379, lon: 116.8529 },
+    { name: 'Tarakan', provinsi: 'Kalimantan Utara', lat: 3.3273, lon: 117.5756 },
+    { name: 'Makassar', provinsi: 'Sulawesi Selatan', lat: -5.1477, lon: 119.4327 },
+    { name: 'Parepare', provinsi: 'Sulawesi Selatan', lat: -4.0135, lon: 119.6255 },
+    { name: 'Palopo', provinsi: 'Sulawesi Selatan', lat: -3.0000, lon: 120.2000 },
+    { name: 'Palu', provinsi: 'Sulawesi Tengah', lat: -0.8917, lon: 119.8707 },
+    { name: 'Kendari', provinsi: 'Sulawesi Tenggara', lat: -3.9450, lon: 122.4989 },
+    { name: 'Gorontalo', provinsi: 'Gorontalo', lat: 0.5435, lon: 123.0568 },
+    { name: 'Manado', provinsi: 'Sulawesi Utara', lat: 1.4748, lon: 124.8421 },
+    { name: 'Mamuju', provinsi: 'Sulawesi Barat', lat: -2.6766, lon: 118.8887 },
+    { name: 'Majene', provinsi: 'Sulawesi Barat', lat: -3.5403, lon: 118.9707 },
+    { name: 'Polewali', provinsi: 'Sulawesi Barat', lat: -3.4322, lon: 119.3436 },
+    { name: 'Mamasa', provinsi: 'Sulawesi Barat', lat: -2.9500, lon: 119.3667 },
+    { name: 'Ambon', provinsi: 'Maluku', lat: -3.6954, lon: 128.1814 },
+    { name: 'Ternate', provinsi: 'Maluku Utara', lat: 0.7900, lon: 127.3800 },
+    { name: 'Jayapura', provinsi: 'Papua', lat: -2.5916, lon: 140.6690 },
+    { name: 'Sorong', provinsi: 'Papua Barat', lat: -0.8762, lon: 131.2558 },
+    { name: 'Manokwari', provinsi: 'Papua Barat', lat: -0.8615, lon: 134.0620 },
+    { name: 'Merauke', provinsi: 'Papua', lat: -8.4932, lon: 140.4018 }
   ];
 
-  Promise.all(endpoints.map(function(url){
-    return fetch(url)
+  var aqiCluster = L.markerClusterGroup({
+    maxClusterRadius: 60,
+    disableClusteringAtZoom: 9,
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false,
+    zoomToBoundsOnClick: true,
+    iconCreateFunction: function(cluster){
+      var count = cluster.getChildCount();
+      return L.divIcon({
+        html: '<div style="background:rgba(10,10,10,.85);border:2px solid #d7f36a;color:#d7f36a;' +
+              'border-radius:50%;width:36px;height:36px;display:grid;place-items:center;' +
+              'font-family:var(--px);font-size:9px;box-shadow:0 0 16px rgba(215,243,106,.4);' +
+              'backdrop-filter:blur(6px);">' + count + '</div>',
+        className: 'custom-cluster',
+        iconSize: [36, 36],
+        iconAnchor: [18, 18]
+      });
+    }
+  });
+
+  var weatherCluster = L.markerClusterGroup({
+    maxClusterRadius: 60,
+    disableClusteringAtZoom: 9,
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false,
+    zoomToBoundsOnClick: true,
+    iconCreateFunction: function(cluster){
+      var count = cluster.getChildCount();
+      return L.divIcon({
+        html: '<div style="background:rgba(10,10,10,.85);border:2px solid #4fc3f7;color:#4fc3f7;' +
+              'border-radius:50%;width:36px;height:36px;display:grid;place-items:center;' +
+              'font-family:var(--px);font-size:9px;box-shadow:0 0 16px rgba(79,195,247,.4);' +
+              'backdrop-filter:blur(6px);">' + count + '</div>',
+        className: 'custom-cluster',
+        iconSize: [36, 36],
+        iconAnchor: [18, 18]
+      });
+    }
+  });
+
+  var gempaLayer = L.layerGroup();
+  var fireLayer = L.layerGroup();
+
+  var HOME_LAT = -2.681803;
+  var HOME_LON = 118.859484;
+
+  var homeIcon = L.divIcon({
+    className: 'home-marker',
+    html: '<div class="home-marker-pulse"></div>' +
+          '<div class="home-marker-inner">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2.2" ' +
+                 'stroke-linecap="round" stroke-linejoin="round">' +
+              '<path d="M3 10.5L12 3l9 7.5"/>' +
+              '<path d="M5 10v10h14V10"/>' +
+              '<path d="M10 20v-6h4v6"/>' +
+            '</svg>' +
+          '</div>',
+    iconSize: [38, 38],
+    iconAnchor: [19, 19],
+    popupAnchor: [0, -22]
+  });
+
+  var homeMarker = L.marker([HOME_LAT, HOME_LON], {
+    icon: homeIcon,
+    zIndexOffset: 1000
+  }).addTo(map);
+
+  homeMarker.bindTooltip('Rumah — Mamuju', {
+    direction: 'top',
+    offset: [0, -22],
+    className: 'home-tooltip'
+  });
+
+  homeMarker.bindPopup(
+    '<span class="home-popup-title">◆ Alamat Rumah</span>' +
+    '<span class="home-popup-value">Kec. Mamuju<br>Kabupaten Mamuju, Sulawesi Barat</span>' +
+    '<span class="home-popup-label">Lat: ' + HOME_LAT.toFixed(6) + ' · Lon: ' + HOME_LON.toFixed(6) + '</span>'
+  );
+
+  function fmt(v){ return (v !== null && v !== undefined && !isNaN(v)) ? Number(v).toFixed(1) : '—'; }
+
+  function getAQIColor(aqi){
+    if (aqi <= 50)  return '#00e400';
+    if (aqi <= 100) return '#ffff00';
+    if (aqi <= 150) return '#ff7e00';
+    if (aqi <= 200) return '#ff0000';
+    if (aqi <= 300) return '#8f3f97';
+    return '#7e0023';
+  }
+  function getAQILabel(aqi){
+    if (aqi <= 50)  return 'Baik';
+    if (aqi <= 100) return 'Sedang';
+    if (aqi <= 150) return 'Tidak Sehat (Sensitif)';
+    if (aqi <= 200) return 'Tidak Sehat';
+    if (aqi <= 300) return 'Sangat Tidak Sehat';
+    return 'Berbahaya';
+  }
+
+  function fetchCityAQI(city){
+    var url = 'https://air-quality-api.open-meteo.com/v1/air-quality' +
+              '?latitude=' + city.lat +
+              '&longitude=' + city.lon +
+              '&current=us_aqi,pm2_5,pm10,ozone,nitrogen_dioxide,sulphur_dioxide,carbon_monoxide' +
+              '&timezone=Asia%2FMakassar';
+
+    fetch(url)
       .then(function(r){
         if (!r.ok) throw new Error('HTTP ' + r.status);
         return r.json();
       })
-      .catch(function(e){
-        console.warn('Gagal ambil ' + url + ':', e);
-        return null;
-      });
-  })).then(function(results){
-    var allGempa = [];
-    var seen = {};
-
-    results.forEach(function(data){
-      if (!data || !data.Infogempa || !data.Infogempa.gempa) return;
-      var gempaArr = data.Infogempa.gempa;
-      if (!Array.isArray(gempaArr)) gempaArr = [gempaArr];
-
-      gempaArr.forEach(function(g){
-        var key = (g.DateTime || '') + '|' + (g.Coordinates || '');
-        if (seen[key]) return;
-        seen[key] = true;
-        allGempa.push(g);
-      });
-    });
-
-    allGempa.forEach(addGempaMarker);
-    console.log('Total gempa dimuat:', allGempa.length);
-  });
-}
-
-/* ============================================================
-   TAB 4 — KEBAKARAN (NASA FIRMS)
-   ============================================================ */
-function getFireColor(frp){
-  if (frp >= 100) return '#ff1a1a';
-  if (frp >= 50)  return '#ff6b00';
-  if (frp >= 20)  return '#ffd93d';
-  if (frp >= 5)   return '#6bcb77';
-  return '#7ce7ff';
-}
-function getFireLabel(frp){
-  if (frp >= 100) return 'Ekstrem';
-  if (frp >= 50)  return 'Tinggi';
-  if (frp >= 20)  return 'Sedang';
-  if (frp >= 5)   return 'Rendah';
-  return 'Sangat Rendah';
-}
-function getFireRadius(frp){
-  return Math.max(5, Math.min(18, 5 + Math.log10(frp + 1) * 6));
-}
-
-function addFireMarker(lat, lon, frp, bright, conf, date, time, sat){
-  var color = getFireColor(frp);
-  var radius = getFireRadius(frp);
-  var label = getFireLabel(frp);
-
-  var circle = L.circleMarker([lat, lon], {
-    radius: radius,
-    fillColor: color,
-    color: '#ffffff',
-    weight: 1.2,
-    opacity: 0.9,
-    fillOpacity: 0.5
-  });
-
-  var popup = '<span class="fire-popup-title">◆ Titik Api</span>' +
-              '<span class="fire-popup-frp">FRP ' + frp.toFixed(1) + ' MW</span>' +
-              '<span class="fire-popup-label">' + label + ' · Suhu ' + (bright ? bright.toFixed(1) : '—') + ' K</span>' +
-              '<br><br>' +
-              '<div class="fire-popup-row"><span class="k">Tanggal</span><span class="v">' + date + '</span></div>' +
-              '<div class="fire-popup-row"><span class="k">Jam (UTC)</span><span class="v">' + time + '</span></div>' +
-              '<div class="fire-popup-row"><span class="k">Satelit</span><span class="v">' + sat + '</span></div>' +
-              '<div class="fire-popup-row"><span class="k">Confidence</span><span class="v">' + conf + '</span></div>' +
-              '<div class="fire-popup-row"><span class="k">Koordinat</span><span class="v" style="font-size:11px">' +
-                lat.toFixed(3) + ', ' + lon.toFixed(3) + '</span></div>';
-
-  circle.bindPopup(popup);
-  circle.bindTooltip('🔥 FRP ' + frp.toFixed(1) + ' MW · ' + label,
-    { direction: 'top', offset: [0, -8], className: 'fire-tooltip' });
-
-  fireLayer.addLayer(circle);
-}
-
-function addFireFallbackMarkers(){
-  console.warn('FIRMS API gagal — menampilkan marker contoh untuk demo.');
-  var demo = [
-    [0.50, 101.45, 85], [0.55, 101.40, 62], [0.42, 101.50, 45],
-    [-2.10, 104.50, 120], [-2.20, 104.60, 78],
-    [-6.90, 107.60, 55], [-6.85, 107.65, 42],
-    [-2.50, 114.50, 95], [-2.60, 114.55, 68],
-    [-0.50, 117.00, 88], [-0.55, 117.05, 52],
-    [0.30, 109.50, 110], [0.25, 109.55, 75]
-  ];
-  demo.forEach(function(p){
-    addFireMarker(p[0], p[1], p[2], 320 + Math.random()*40, 'n', '2025-01-01', '0500', 'demo');
-  });
-}
-
-function fetchFireData(){
-  var bbox = '95,-11,141,6';
-  var sources = ['VIIRS_SNPP_NRT', 'VIIRS_NOAA20_NRT', 'MODIS_NRT'];
-
-  var urls = sources.map(function(src){
-    return 'https://firms.modaps.eosdis.nasa.gov/api/area/csv/' +
-           FIRMS_MAP_KEY + '/' + src + '/' + bbox + '/1';
-  });
-
-  Promise.all(urls.map(function(url){
-    return fetch(url)
-      .then(function(r){
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.text();
+      .then(function(data){
+        if (data.current && data.current.us_aqi !== undefined){
+          addStationMarker(city,
+            Math.round(data.current.us_aqi),
+            data.current.pm2_5, data.current.pm10,
+            data.current.ozone, data.current.nitrogen_dioxide,
+            data.current.sulphur_dioxide, data.current.carbon_monoxide);
+        } else {
+          addStationMarker(city, null, null, null, null, null, null, null);
+        }
       })
-      .catch(function(e){
-        console.warn('Gagal ambil ' + url + ':', e);
-        return null;
+      .catch(function(err){
+        console.warn('AQI gagal untuk ' + city.name + ':', err);
+        addStationMarker(city, null, null, null, null, null, null, null);
       });
-  })).then(function(results){
-    var totalCount = 0;
-    var seen = {};
-
-    results.forEach(function(csvText){
-      if (!csvText) return;
-      var lines = csvText.trim().split('\n');
-      if (lines.length < 2) return;
-
-      var headers = lines[0].split(',');
-      var latIdx = headers.indexOf('latitude');
-      var lonIdx = headers.indexOf('longitude');
-      var frpIdx = headers.indexOf('frp');
-      var brightIdx = headers.indexOf('bright_ti4');
-      if (brightIdx === -1) brightIdx = headers.indexOf('brightness');
-      var confIdx = headers.indexOf('confidence');
-      var acqIdx = headers.indexOf('acq_date');
-      var timeIdx = headers.indexOf('acq_time');
-      var satIdx = headers.indexOf('satellite');
-
-      if (latIdx === -1 || lonIdx === -1) return;
-
-      for (var i = 1; i < lines.length; i++){
-        var cols = lines[i].split(',');
-        var lat = parseFloat(cols[latIdx]);
-        var lon = parseFloat(cols[lonIdx]);
-        if (isNaN(lat) || isNaN(lon)) continue;
-
-        var key = lat.toFixed(4) + '|' + lon.toFixed(4);
-        if (seen[key]) continue;
-        seen[key] = true;
-
-        var frp = frpIdx !== -1 ? parseFloat(cols[frpIdx]) || 0 : 0;
-        var bright = brightIdx !== -1 ? parseFloat(cols[brightIdx]) || 0 : 0;
-        var conf = confIdx !== -1 ? (cols[confIdx] || '—') : '—';
-        var date = acqIdx !== -1 ? (cols[acqIdx] || '—') : '—';
-        var time = timeIdx !== -1 ? (cols[timeIdx] || '—') : '—';
-        var sat = satIdx !== -1 ? (cols[satIdx] || '—') : '—';
-
-        addFireMarker(lat, lon, frp, bright, conf, date, time, sat);
-        totalCount++;
-      }
-    });
-
-    console.log('Total titik api dimuat:', totalCount);
-    if (totalCount === 0) addFireFallbackMarkers();
-  });
-}
-
-/* ============================================================
-   TAB SWITCHING
-   ============================================================ */
-var mapTabs = document.querySelectorAll('.map-tab');
-var legendTitle = document.getElementById('legend-title');
-var legendContent = document.getElementById('legend-content');
-var mapWarning = document.getElementById('map-warning');
-var aqiLoaded = false, weatherLoaded = false, gempaLoaded = false, fireLoaded = false;
-var loadingEl = document.getElementById('map-loading');
-var loadingTimer = null;
-
-function showLoading(msg){
-  loadingEl.querySelector('span').textContent = msg || 'Memuat data…';
-  loadingEl.classList.add('is-visible');
-}
-function hideLoading(){
-  loadingEl.classList.remove('is-visible');
-}
-function autoHideLoading(ms){
-  if (loadingTimer) clearTimeout(loadingTimer);
-  loadingTimer = setTimeout(hideLoading, ms);
-}
-
-function setActiveTab(tabName){
-  mapTabs.forEach(function(t){
-    t.classList.toggle('is-active', t.dataset.mapTab === tabName);
-  });
-
-  if (map.hasLayer(aqiCluster)) map.removeLayer(aqiCluster);
-  if (map.hasLayer(weatherCluster)) map.removeLayer(weatherCluster);
-  if (map.hasLayer(gempaLayer)) map.removeLayer(gempaLayer);
-  if (map.hasLayer(fireLayer)) map.removeLayer(fireLayer);
-
-  mapWarning.style.display = 'none';
-
-  if (tabName === 'aqi'){
-    map.addLayer(aqiCluster);
-    legendTitle.textContent = 'AQI Scale';
-    legendContent.innerHTML =
-      '<div class="legend-row"><span class="legend-dot" style="background:#00e400"></span> Baik (0–50)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#ffff00"></span> Sedang (51–100)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#ff7e00"></span> Sensitif (101–150)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#ff0000"></span> Tidak Sehat (151–200)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#8f3f97"></span> Sangat Tidak Sehat (201+)</div>';
-
-    if (!aqiLoaded){
-      aqiLoaded = true;
-      showLoading('Memuat polusi udara…');
-      loadAllAQI(cities, function(){
-        hideLoading();
-        console.log('Semua data AQI selesai dimuat.');
-      });
-      autoHideLoading(20000);
-    }
-
-  } else if (tabName === 'cuaca'){
-    map.addLayer(weatherCluster);
-    legendTitle.textContent = 'Cuaca & Hujan';
-    legendContent.innerHTML =
-      '<div class="legend-row"><span class="legend-dot" style="background:#6bcb77"></span> Kering (&lt;0.1 mm)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#7ce7ff"></span> Gerimis (0.1–1)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#4fc3f7"></span> Ringan (1–5)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#2196f3"></span> Sedang (5–20)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#1565c0"></span> Lebat (20–50)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#0d47a1"></span> Sangat Lebat (50+)</div>';
-
-    if (!weatherLoaded){
-      weatherLoaded = true;
-      showLoading('Memuat cuaca & hujan…');
-      loadAllWeather(cities, function(){
-        hideLoading();
-        console.log('Semua data cuaca selesai dimuat.');
-      });
-      autoHideLoading(20000);
-    }
-
-  } else if (tabName === 'gempa'){
-    map.addLayer(gempaLayer);
-    legendTitle.textContent = 'Gempa BMKG';
-    legendContent.innerHTML =
-      '<div class="legend-row"><span class="legend-dot" style="background:#ff3d3d"></span> M ≥ 7.0</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#ff8c42"></span> M 6.0–6.9</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#ffd93d"></span> M 5.0–5.9</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#6bcb77"></span> M 4.0–4.9</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#7ce7ff"></span> M &lt; 4.0</div>';
-
-    if (!gempaLoaded){
-      gempaLoaded = true;
-      showLoading('Memuat gempa BMKG…');
-      fetchGempaData();
-      autoHideLoading(8000);
-    }
-
-  } else if (tabName === 'kebakaran'){
-    map.addLayer(fireLayer);
-    legendTitle.textContent = 'Kebakaran NASA';
-    legendContent.innerHTML =
-      '<div class="legend-row"><span class="legend-dot" style="background:#ff1a1a"></span> FRP ≥ 100 (Ekstrem)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#ff6b00"></span> FRP 50–99 (Tinggi)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#ffd93d"></span> FRP 20–49 (Sedang)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#6bcb77"></span> FRP 5–19 (Rendah)</div>' +
-      '<div class="legend-row"><span class="legend-dot" style="background:#7ce7ff"></span> FRP &lt; 5 (Mikro)</div>';
-
-    mapWarning.style.display = 'block';
-
-    if (!fireLoaded){
-      fireLoaded = true;
-      showLoading('Memuat titik api…');
-      fetchFireData();
-      autoHideLoading(12000);
-    }
   }
 
-  setTimeout(function(){ map.invalidateSize(); }, 150);
-}
+  function addStationMarker(city, aqi, pm25, pm10, o3, no2, so2, co){
+    var markerColor = aqi !== null ? getAQIColor(aqi) : '#9aa0a6';
+    var label = aqi !== null ? getAQILabel(aqi) : 'Data tidak tersedia';
+    var size = aqi !== null ? (12 + Math.min(aqi, 250) / 250 * 14) : 10;
 
-mapTabs.forEach(function(tab){
-  tab.addEventListener('click', function(){
-    setActiveTab(tab.dataset.mapTab);
+    var customIcon = L.divIcon({
+      className: 'aqi-marker',
+      html: '<div style="' +
+            'width:' + size + 'px;height:' + size + 'px;' +
+            'background:' + markerColor + ';' +
+            'border:2px solid rgba(255,255,255,0.85);' +
+            'border-radius:50%;' +
+            'box-shadow:0 0 12px ' + markerColor + ',0 0 24px ' + markerColor + '44;' +
+            '"></div>',
+      iconSize: [size, size],
+      iconAnchor: [size/2, size/2],
+      popupAnchor: [0, -size/2 - 4]
+    });
+
+    var popup = '<span class="aqi-popup-title">' + city.name + '</span>' +
+                '<span class="aqi-popup-label" style="margin-bottom:6px;display:block;">' +
+                city.provinsi + '</span>';
+    if (aqi !== null){
+      popup += '<span class="aqi-popup-value">' + aqi + '</span>' +
+               '<span class="aqi-popup-label">US AQI — ' + label + '</span><br><br>' +
+               '<span class="aqi-popup-label">PM2.5: ' + fmt(pm25) + ' µg/m³</span><br>' +
+               '<span class="aqi-popup-label">PM10: ' + fmt(pm10) + ' µg/m³</span><br>' +
+               '<span class="aqi-popup-label">O₃: ' + fmt(o3) + ' µg/m³</span><br>' +
+               '<span class="aqi-popup-label">NO₂: ' + fmt(no2) + ' µg/m³</span><br>' +
+               '<span class="aqi-popup-label">SO₂: ' + fmt(so2) + ' µg/m³</span><br>' +
+               '<span class="aqi-popup-label">CO: ' + fmt(co) + ' µg/m³</span>';
+    } else {
+      popup += '<span class="aqi-popup-value">—</span>' +
+               '<span class="aqi-popup-label">Data tidak tersedia</span>';
+    }
+
+    var marker = L.marker([city.lat, city.lon], { icon: customIcon })
+      .bindPopup(popup);
+    marker.bindTooltip(city.name + (aqi !== null ? ' · AQI ' + aqi : ''),
+      { direction: 'top', offset: [0, -10], className: 'aqi-tooltip' });
+    aqiCluster.addLayer(marker);
+  }
+
+  function loadAllAQI(citiesArr, onComplete){
+    var i = 0;
+    function next(){
+      if (i >= citiesArr.length){
+        if (onComplete) onComplete();
+        return;
+      }
+      fetchCityAQI(citiesArr[i]);
+      i++;
+      setTimeout(next, 150);
+    }
+    next();
+  }
+
+  function getTempColor(t){
+    if (t === null || t === undefined) return '#9aa0a6';
+    if (t >= 35) return '#d32f2f';
+    if (t >= 32) return '#ff5252';
+    if (t >= 28) return '#ff8c42';
+    if (t >= 24) return '#ffd93d';
+    if (t >= 20) return '#6bcb77';
+    if (t >= 15) return '#4fc3f7';
+    return '#42a5f5';
+  }
+  function getRainColor(mm){
+    if (mm === null || mm === undefined || mm < 0.1) return '#6bcb77';
+    if (mm < 1)   return '#7ce7ff';
+    if (mm < 5)   return '#4fc3f7';
+    if (mm < 20)  return '#2196f3';
+    if (mm < 50)  return '#1565c0';
+    return '#0d47a1';
+  }
+  function getRainLabel(mm){
+    if (mm === null || mm === undefined) return '—';
+    if (mm < 0.1)  return 'Kering';
+    if (mm < 1)    return 'Gerimis';
+    if (mm < 5)    return 'Hujan Ringan';
+    if (mm < 20)   return 'Hujan Sedang';
+    if (mm < 50)   return 'Hujan Lebat';
+    return 'Hujan Sangat Lebat';
+  }
+
+  function fetchCityWeather(city){
+    var url = 'https://api.open-meteo.com/v1/forecast' +
+              '?latitude=' + city.lat +
+              '&longitude=' + city.lon +
+              '&current=temperature_2m,relative_humidity_2m,precipitation,rain,showers,weather_code,wind_speed_10m,wind_direction_10m' +
+              '&timezone=Asia%2FMakassar';
+
+    fetch(url)
+      .then(function(r){
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function(data){
+        if (!data.current) return;
+        addWeatherMarker(city, data.current);
+      })
+      .catch(function(err){
+        console.warn('Cuaca gagal untuk ' + city.name + ':', err);
+      });
+  }
+
+  function addWeatherMarker(city, cur){
+    var temp  = cur.temperature_2m;
+    var hum   = cur.relative_humidity_2m;
+    var rain  = cur.precipitation;
+    var wind  = cur.wind_speed_10m;
+    var code  = cur.weather_code;
+
+    var size = 12 + Math.min(Math.max((rain || 0) * 1.5, 0), 14);
+    var color = getRainColor(rain);
+    var tempColor = getTempColor(temp);
+
+    var customIcon = L.divIcon({
+      className: 'weather-marker',
+      html: '<div style="' +
+            'width:' + size + 'px;height:' + size + 'px;' +
+            'background:' + color + ';' +
+            'border:2px solid ' + tempColor + ';' +
+            'border-radius:50%;' +
+            'box-shadow:0 0 10px ' + color + ',0 0 20px ' + color + '44;' +
+            '"></div>',
+      iconSize: [size, size],
+      iconAnchor: [size/2, size/2],
+      popupAnchor: [0, -size/2 - 4]
+    });
+
+    var marker = L.marker([city.lat, city.lon], { icon: customIcon });
+
+    var rainBadge = (rain !== null && rain !== undefined && rain >= 0.1)
+      ? '<span class="wx-rain-badge">🌧 ' + getRainLabel(rain) + '</span>'
+      : '';
+
+    var popup =
+      '<span class="wx-popup-title">◆ Cuaca Live</span>' +
+      '<span class="wx-popup-label" style="margin-bottom:6px;display:block;">' +
+      city.name + ' · ' + city.provinsi + '</span>' +
+      '<span class="wx-popup-temp">' + fmt(temp) + '°C</span>' +
+      '<span class="wx-popup-label">' + (code !== undefined ? 'Kode cuaca: ' + code : '') + '</span>' +
+      '<br><br>' +
+      '<div class="wx-popup-row"><span class="k">Hujan</span><span class="v">' + fmt(rain) + ' mm</span></div>' +
+      '<div class="wx-popup-row"><span class="k">Kelembaban</span><span class="v">' + fmt(hum) + ' %</span></div>' +
+      '<div class="wx-popup-row"><span class="k">Angin</span><span class="v">' + fmt(wind) + ' km/h</span></div>' +
+      '<div class="wx-popup-row"><span class="k">Arah Angin</span><span class="v">' + fmt(cur.wind_direction_10m) + '°</span></div>' +
+      rainBadge;
+
+    marker.bindPopup(popup);
+    marker.bindTooltip(city.name + ' · ' + fmt(temp) + '°C · ' + fmt(rain) + ' mm',
+      { direction: 'top', offset: [0, -10], className: 'weather-tooltip' });
+
+    weatherCluster.addLayer(marker);
+  }
+
+  function loadAllWeather(citiesArr, onComplete){
+    var i = 0;
+    function next(){
+      if (i >= citiesArr.length){
+        if (onComplete) onComplete();
+        return;
+      }
+      fetchCityWeather(citiesArr[i]);
+      i++;
+      setTimeout(next, 150);
+    }
+    next();
+  }
+
+  function getEqColor(mag){
+    if (mag >= 7.0) return '#ff3d3d';
+    if (mag >= 6.0) return '#ff8c42';
+    if (mag >= 5.0) return '#ffd93d';
+    if (mag >= 4.0) return '#6bcb77';
+    return '#7ce7ff';
+  }
+  function getEqLabel(mag){
+    if (mag >= 7.0) return 'Besar';
+    if (mag >= 6.0) return 'Kuat';
+    if (mag >= 5.0) return 'Sedang';
+    if (mag >= 4.0) return 'Ringan';
+    return 'Mikro';
+  }
+  function getEqRadius(mag){ return Math.max(8, Math.min(28, mag * 4)); }
+  function parseEqCoord(gempa){
+    var raw = gempa.Coordinates || '';
+    var parts = raw.split(',');
+    if (parts.length !== 2) return null;
+    var lat = parseFloat(parts[0]);
+    var lon = parseFloat(parts[1]);
+    if (isNaN(lat) || isNaN(lon)) return null;
+    return [lat, lon];
+  }
+  function addGempaMarker(gempa){
+    var coord = parseEqCoord(gempa);
+    if (!coord) return;
+
+    var mag = parseFloat(gempa.Magnitude) || 0;
+    var color = getEqColor(mag);
+    var radius = getEqRadius(mag);
+    var label = getEqLabel(mag);
+    var tsunami = gempa.Potensi && gempa.Potensi.toLowerCase().indexOf('tsunami') !== -1;
+
+    var circle = L.circleMarker(coord, {
+      radius: radius,
+      fillColor: color,
+      color: '#ffffff',
+      weight: 1.5,
+      opacity: 0.9,
+      fillOpacity: 0.55
+    });
+
+    var popup = '<span class="eq-popup-title">◆ Gempa Bumi</span>' +
+                '<span class="eq-popup-mag">M ' + mag.toFixed(1) + '</span>' +
+                '<span class="eq-popup-label">' + label + ' · ' + (gempa.Kedalaman || '—') + '</span>' +
+                '<br><br>' +
+                '<div class="eq-popup-row"><span class="k">Waktu</span><span class="v">' +
+                  (gempa.Tanggal || '—') + ' ' + (gempa.Jam || '') + '</span></div>' +
+                '<div class="eq-popup-row"><span class="k">Lokasi</span><span class="v" style="font-size:11px">' +
+                  (gempa.Wilayah || '—') + '</span></div>' +
+                '<div class="eq-popup-row"><span class="k">Koordinat</span><span class="v" style="font-size:11px">' +
+                  coord[0].toFixed(2) + ', ' + coord[1].toFixed(2) + '</span></div>';
+
+    if (gempa.Dirasakan){
+      popup += '<div class="eq-popup-row"><span class="k">Dirasakan</span><span class="v" style="font-size:11px">' +
+               gempa.Dirasakan + '</span></div>';
+    }
+    if (tsunami){
+      popup += '<span class="eq-tsunami">⚠ Potensi Tsunami</span>';
+    }
+
+    circle.bindPopup(popup);
+    circle.bindTooltip('M ' + mag.toFixed(1) + ' · ' + (gempa.Wilayah || '').substring(0, 40),
+      { direction: 'top', offset: [0, -8], className: 'eq-tooltip' });
+
+    gempaLayer.addLayer(circle);
+  }
+
+  function fetchGempaData(){
+    var endpoints = [
+      'https://data.bmkg.go.id/DataMKG/TEWS/gempadirasakan.json',
+      'https://data.bmkg.go.id/DataMKG/TEWS/gempaterkini.json'
+    ];
+
+    Promise.all(endpoints.map(function(url){
+      return fetch(url)
+        .then(function(r){
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .catch(function(e){
+          console.warn('Gagal ambil ' + url + ':', e);
+          return null;
+        });
+    })).then(function(results){
+      var allGempa = [];
+      var seen = {};
+
+      results.forEach(function(data){
+        if (!data || !data.Infogempa || !data.Infogempa.gempa) return;
+        var gempaArr = data.Infogempa.gempa;
+        if (!Array.isArray(gempaArr)) gempaArr = [gempaArr];
+
+        gempaArr.forEach(function(g){
+          var key = (g.DateTime || '') + '|' + (g.Coordinates || '');
+          if (seen[key]) return;
+          seen[key] = true;
+          allGempa.push(g);
+        });
+      });
+
+      allGempa.forEach(addGempaMarker);
+      console.log('Total gempa dimuat:', allGempa.length);
+    });
+  }
+
+  function getFireColor(frp){
+    if (frp >= 100) return '#ff1a1a';
+    if (frp >= 50)  return '#ff6b00';
+    if (frp >= 20)  return '#ffd93d';
+    if (frp >= 5)   return '#6bcb77';
+    return '#7ce7ff';
+  }
+  function getFireLabel(frp){
+    if (frp >= 100) return 'Ekstrem';
+    if (frp >= 50)  return 'Tinggi';
+    if (frp >= 20)  return 'Sedang';
+    if (frp >= 5)   return 'Rendah';
+    return 'Sangat Rendah';
+  }
+  function getFireRadius(frp){ return Math.max(5, Math.min(18, 5 + Math.log10(frp + 1) * 6)); }
+
+  function addFireMarker(lat, lon, frp, bright, conf, date, time, sat){
+    var color = getFireColor(frp);
+    var radius = getFireRadius(frp);
+    var label = getFireLabel(frp);
+
+    var circle = L.circleMarker([lat, lon], {
+      radius: radius,
+      fillColor: color,
+      color: '#ffffff',
+      weight: 1.2,
+      opacity: 0.9,
+      fillOpacity: 0.5
+    });
+
+    var popup = '<span class="fire-popup-title">◆ Titik Api</span>' +
+                '<span class="fire-popup-frp">FRP ' + frp.toFixed(1) + ' MW</span>' +
+                '<span class="fire-popup-label">' + label + ' · Suhu ' + (bright ? bright.toFixed(1) : '—') + ' K</span>' +
+                '<br><br>' +
+                '<div class="fire-popup-row"><span class="k">Tanggal</span><span class="v">' + date + '</span></div>' +
+                '<div class="fire-popup-row"><span class="k">Jam (UTC)</span><span class="v">' + time + '</span></div>' +
+                '<div class="fire-popup-row"><span class="k">Satelit</span><span class="v">' + sat + '</span></div>' +
+                '<div class="fire-popup-row"><span class="k">Confidence</span><span class="v">' + conf + '</span></div>' +
+                '<div class="fire-popup-row"><span class="k">Koordinat</span><span class="v" style="font-size:11px">' +
+                  lat.toFixed(3) + ', ' + lon.toFixed(3) + '</span></div>';
+
+    circle.bindPopup(popup);
+    circle.bindTooltip('🔥 FRP ' + frp.toFixed(1) + ' MW · ' + label,
+      { direction: 'top', offset: [0, -8], className: 'fire-tooltip' });
+
+    fireLayer.addLayer(circle);
+  }
+
+  function addFireFallbackMarkers(){
+    console.warn('FIRMS API gagal — menampilkan marker contoh untuk demo.');
+    var demo = [
+      [0.50, 101.45, 85], [0.55, 101.40, 62], [0.42, 101.50, 45],
+      [-2.10, 104.50, 120], [-2.20, 104.60, 78],
+      [-6.90, 107.60, 55], [-6.85, 107.65, 42],
+      [-2.50, 114.50, 95], [-2.60, 114.55, 68],
+      [-0.50, 117.00, 88], [-0.55, 117.05, 52],
+      [0.30, 109.50, 110], [0.25, 109.55, 75]
+    ];
+    demo.forEach(function(p){
+      addFireMarker(p[0], p[1], p[2], 320 + Math.random()*40, 'n', '2025-01-01', '0500', 'demo');
+    });
+  }
+
+  function fetchFireData(){
+    var bbox = '95,-11,141,6';
+    var sources = ['VIIRS_SNPP_NRT', 'VIIRS_NOAA20_NRT', 'MODIS_NRT'];
+
+    var urls = sources.map(function(src){
+      return 'https://firms.modaps.eosdis.nasa.gov/api/area/csv/' +
+             FIRMS_MAP_KEY + '/' + src + '/' + bbox + '/1';
+    });
+
+    Promise.all(urls.map(function(url){
+      return fetch(url)
+        .then(function(r){
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.text();
+        })
+        .catch(function(e){
+          console.warn('Gagal ambil ' + url + ':', e);
+          return null;
+        });
+    })).then(function(results){
+      var totalCount = 0;
+      var seen = {};
+
+      results.forEach(function(csvText){
+        if (!csvText) return;
+        var lines = csvText.trim().split('\n');
+        if (lines.length < 2) return;
+
+        var headers = lines[0].split(',');
+        var latIdx = headers.indexOf('latitude');
+        var lonIdx = headers.indexOf('longitude');
+        var frpIdx = headers.indexOf('frp');
+        var brightIdx = headers.indexOf('bright_ti4');
+        if (brightIdx === -1) brightIdx = headers.indexOf('brightness');
+        var confIdx = headers.indexOf('confidence');
+        var acqIdx = headers.indexOf('acq_date');
+        var timeIdx = headers.indexOf('acq_time');
+        var satIdx = headers.indexOf('satellite');
+
+        if (latIdx === -1 || lonIdx === -1) return;
+
+        for (var i = 1; i < lines.length; i++){
+          var cols = lines[i].split(',');
+          var lat = parseFloat(cols[latIdx]);
+          var lon = parseFloat(cols[lonIdx]);
+          if (isNaN(lat) || isNaN(lon)) continue;
+
+          var key = lat.toFixed(4) + '|' + lon.toFixed(4);
+          if (seen[key]) continue;
+          seen[key] = true;
+
+          var frp = frpIdx !== -1 ? parseFloat(cols[frpIdx]) || 0 : 0;
+          var bright = brightIdx !== -1 ? parseFloat(cols[brightIdx]) || 0 : 0;
+          var conf = confIdx !== -1 ? (cols[confIdx] || '—') : '—';
+          var date = acqIdx !== -1 ? (cols[acqIdx] || '—') : '—';
+          var time = timeIdx !== -1 ? (cols[timeIdx] || '—') : '—';
+          var sat = satIdx !== -1 ? (cols[satIdx] || '—') : '—';
+
+          addFireMarker(lat, lon, frp, bright, conf, date, time, sat);
+          totalCount++;
+        }
+      });
+
+      console.log('Total titik api dimuat:', totalCount);
+      if (totalCount === 0) addFireFallbackMarkers();
+    });
+  }
+
+  var mapTabs = document.querySelectorAll('.map-tab');
+  var legendTitle = document.getElementById('legend-title');
+  var legendContent = document.getElementById('legend-content');
+  var mapWarning = document.getElementById('map-warning');
+  var aqiLoaded = false, weatherLoaded = false, gempaLoaded = false, fireLoaded = false;
+  var loadingEl = document.getElementById('map-loading');
+  var loadingTimer = null;
+
+  function showLoading(msg){
+    if (!loadingEl) return;
+    loadingEl.querySelector('span').textContent = msg || 'Memuat data…';
+    loadingEl.classList.add('is-visible');
+  }
+  function hideLoading(){
+    if (loadingEl) loadingEl.classList.remove('is-visible');
+  }
+  function autoHideLoading(ms){
+    if (loadingTimer) clearTimeout(loadingTimer);
+    loadingTimer = setTimeout(hideLoading, ms);
+  }
+
+  function setActiveTab(tabName){
+    mapTabs.forEach(function(t){
+      t.classList.toggle('is-active', t.dataset.mapTab === tabName);
+    });
+
+    if (map.hasLayer(aqiCluster)) map.removeLayer(aqiCluster);
+    if (map.hasLayer(weatherCluster)) map.removeLayer(weatherCluster);
+    if (map.hasLayer(gempaLayer)) map.removeLayer(gempaLayer);
+    if (map.hasLayer(fireLayer)) map.removeLayer(fireLayer);
+
+    if (mapWarning) mapWarning.style.display = 'none';
+
+    if (tabName === 'aqi'){
+      map.addLayer(aqiCluster);
+      legendTitle.textContent = 'AQI Scale';
+      legendContent.innerHTML =
+        '<div class="legend-row"><span class="legend-dot" style="background:#00e400"></span> Baik (0–50)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#ffff00"></span> Sedang (51–100)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#ff7e00"></span> Sensitif (101–150)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#ff0000"></span> Tidak Sehat (151–200)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#8f3f97"></span> Sangat Tidak Sehat (201+)</div>';
+
+      if (!aqiLoaded){
+        aqiLoaded = true;
+        showLoading('Memuat polusi udara…');
+        loadAllAQI(cities, function(){
+          hideLoading();
+          console.log('Semua data AQI selesai dimuat.');
+        });
+        autoHideLoading(20000);
+      }
+
+    } else if (tabName === 'cuaca'){
+      map.addLayer(weatherCluster);
+      legendTitle.textContent = 'Cuaca & Hujan';
+      legendContent.innerHTML =
+        '<div class="legend-row"><span class="legend-dot" style="background:#6bcb77"></span> Kering (&lt;0.1 mm)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#7ce7ff"></span> Gerimis (0.1–1)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#4fc3f7"></span> Ringan (1–5)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#2196f3"></span> Sedang (5–20)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#1565c0"></span> Lebat (20–50)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#0d47a1"></span> Sangat Lebat (50+)</div>';
+
+      if (!weatherLoaded){
+        weatherLoaded = true;
+        showLoading('Memuat cuaca & hujan…');
+        loadAllWeather(cities, function(){
+          hideLoading();
+          console.log('Semua data cuaca selesai dimuat.');
+        });
+        autoHideLoading(20000);
+      }
+
+    } else if (tabName === 'gempa'){
+      map.addLayer(gempaLayer);
+      legendTitle.textContent = 'Gempa BMKG';
+      legendContent.innerHTML =
+        '<div class="legend-row"><span class="legend-dot" style="background:#ff3d3d"></span> M ≥ 7.0</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#ff8c42"></span> M 6.0–6.9</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#ffd93d"></span> M 5.0–5.9</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#6bcb77"></span> M 4.0–4.9</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#7ce7ff"></span> M &lt; 4.0</div>';
+
+      if (!gempaLoaded){
+        gempaLoaded = true;
+        showLoading('Memuat gempa BMKG…');
+        fetchGempaData();
+        autoHideLoading(8000);
+      }
+
+    } else if (tabName === 'kebakaran'){
+      map.addLayer(fireLayer);
+      legendTitle.textContent = 'Kebakaran NASA';
+      legendContent.innerHTML =
+        '<div class="legend-row"><span class="legend-dot" style="background:#ff1a1a"></span> FRP ≥ 100 (Ekstrem)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#ff6b00"></span> FRP 50–99 (Tinggi)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#ffd93d"></span> FRP 20–49 (Sedang)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#6bcb77"></span> FRP 5–19 (Rendah)</div>' +
+        '<div class="legend-row"><span class="legend-dot" style="background:#7ce7ff"></span> FRP &lt; 5 (Mikro)</div>';
+
+      if (mapWarning) mapWarning.style.display = 'block';
+
+      if (!fireLoaded){
+        fireLoaded = true;
+        showLoading('Memuat titik api…');
+        fetchFireData();
+        autoHideLoading(12000);
+      }
+    }
+
+    setTimeout(function(){ map.invalidateSize(); }, 150);
+  }
+
+  mapTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      setActiveTab(tab.dataset.mapTab);
+    });
   });
-});
 
-/* ============================================================
-   INISIALISASI AWAL
-   ============================================================ */
-aqiLoaded = true;
-showLoading('Memuat polusi udara…');
-loadAllAQI(cities, function(){
-  hideLoading();
-  console.log('Semua data AQI selesai dimuat.');
-});
-autoHideLoading(20000);
+  aqiLoaded = true;
+  showLoading('Memuat polusi udara…');
+  loadAllAQI(cities, function(){
+    hideLoading();
+    console.log('Semua data AQI selesai dimuat.');
+  });
+  autoHideLoading(20000);
 
-/* Hover efek peta */
-var mapContainer = document.getElementById('aqi-map');
-mapContainer.addEventListener('mouseenter', function(){
-  this.style.transition = 'box-shadow 0.4s ease';
-  this.style.boxShadow = '0 0 40px rgba(215,243,106,0.15)';
-});
-mapContainer.addEventListener('mouseleave', function(){
-  this.style.boxShadow = 'none';
-});
+  var mapContainer = document.getElementById('aqi-map');
+  mapContainer.addEventListener('mouseenter', function(){
+    this.style.transition = 'box-shadow 0.4s ease';
+    this.style.boxShadow = '0 0 40px rgba(215,243,106,0.15)';
+  });
+  mapContainer.addEventListener('mouseleave', function(){
+    this.style.boxShadow = 'none';
+  });
 
-window.addEventListener('resize', function(){
-  setTimeout(function(){ map.invalidateSize(); }, 200);
-});
+  window.addEventListener('resize', function(){
+    setTimeout(function(){ map.invalidateSize(); }, 200);
+  });
+})();
 
 /* ============================================================
    CAPABILITY TABS
@@ -2279,7 +2932,7 @@ filters.forEach(function(btn){
 });
 
 /* ============================================================
-   LOCKED FIELDS — NIK & Nomor Telepon
+   LOCKED FIELDS — NIK & Nomor Telepon (identitas + kontak)
    Kode akses: 210454
    ============================================================ */
 (function(){
@@ -2317,11 +2970,12 @@ filters.forEach(function(btn){
   }
 
   function unlockField(fieldName){
-    var el = document.querySelector('.locked-field[data-field="' + fieldName + '"]');
-    if (!el) return;
-    el.classList.add('is-unlocked');
-    var textEl = el.querySelector('.locked-text');
-    textEl.textContent = REVEAL[fieldName];
+    var els = document.querySelectorAll('.locked-field[data-field="' + fieldName + '"]');
+    els.forEach(function(el){
+      el.classList.add('is-unlocked');
+      var textEl = el.querySelector('.locked-text');
+      if (textEl) textEl.textContent = REVEAL[fieldName];
+    });
     unlocked[fieldName] = true;
   }
 
